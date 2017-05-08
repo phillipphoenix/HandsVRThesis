@@ -1,3 +1,10 @@
+\begin{itemize}
+\item Introduction for the implementation section.
+\item Introduction should perhaps introduce the topics of this chapter.
+\end{itemize}
+
+This chapter delves into the categorization of approaches that can be taken when implementing hands in VR and which of these were used for the hands implemented during the thesis project.
+
 \section{Categorization of approaches}
 \label{sec:categorizationOfApproaches}
 \begin{itemize}
@@ -6,6 +13,8 @@
 \item Describe several examples of filter variable combinations and show image sequences.
 \item (Describe the reasons and effects for filtering on the different variables)?
 \end{itemize}
+
+Hands can be implemented in different ways which will lead to different ways of interacting with the world and a different feel for the player. One way of approaching how to implement hands is to filter the player's input. 3 filtering variables will be described below: position filtering, rotation filtering and finger position fingering. These three filtering variables all filter different player input in order to control the hand in different ways.
 
 \missingfigure[figwidth=15cm, figheight=6cm]{Table: Filter variable combinations}
 
@@ -17,6 +26,29 @@
 \item Describe different methods of implementation. Mention depenetration, physics system.
 \end{itemize}
 
+\textbf{Questions to answer in this section:}
+\begin{itemize}
+\item What does it mean to filter the player's positional input?
+\item Why do we want to filter the player's positional input?
+\item How can we filter the player's positional input?
+\end{itemize}
+
+
+\textbf{What does it mean to filter the player's positional input?}\\
+Filtering on the player's positional input means that in certain cases the hand will deviate from the controller's position.
+
+\textbf{Why do we want to filter the player's positional input?}\\
+One of the assumptions put forward in this paper is that it's possible to increase the player's embodiment by simulating more realistic behaviour for hands around objects in the world. One of the first steps here is to not allow the hands to penetrate objects. By using position filtering to deviate the hand from the controller position, when trying to penetrate an object, the hand can react more realistically with the world.
+
+\textbf{How can we filter the player's positional input?}\\
+Position filtering in the case of disallowing the penetration of objects can be implemented in several ways. One of the approaches taken during this thesis project is to detect a collision between the hand and an object in the world and take action when such a collision occurs. The manual collision checking can be implemented by checking for nearby object colliders and using ray casts or sweeps to anticipate the collision.
+Another implementation uses the physics system to handle collisions between the hands and obstacles in the world. The hands are moved by setting their velocities in such a way that they would reach their target within the current frame.
+
+
+%Filtering on the player's positional input means to let the position of the hand deviate the controllers position. Reasons for deviating can include to make sure that no objects are penetrated by the hand. Deviating from the controller position means that the player's hand and the hand in VR are not situated at the same position in space, which might lead to confusion for the player (Maybe reference hand visualization here).
+
+The following two figures shows an image sequence of a hand with no input filtering and an image sequence with a hand that uses position filtering. The second figure shows that the hand is stopping when it reaches the object, whereas in the first figure the hand moves through the object.
+
 \missingfigure[figwidth=15cm]{Image sequence: No filtering}
 \missingfigure[figwidth=15cm]{Image sequence: Position filtering}
 
@@ -25,8 +57,30 @@
 \begin{itemize}
 \item Describe rotation filtering.
 \item Describe reasons to / effects of using rotation filtering: Reduce position filtering, display player's intentions.
-\item Describe different methods of implementation. Mention choice of complexity (simple rotation filtering / vs advances and more nuances rotation filtering), differentiation between object types, angles of approach.
+\item Describe different methods of implementation. Mention choice of complexity (simple rotation filtering vs advanced and more nuanced rotation filtering), differentiation between object types, angles of approach.
 \end{itemize}
+
+\textbf{Questions to answer in this section:}
+\begin{itemize}
+\item What does it mean to filter the player's rotational input?
+\item Why do we want to filter the player's rotational input?
+\item How can we filter the player's rotational input?
+\end{itemize}
+
+\textbf{What does it mean to filter the player's rotational input?}\\
+Filtering on the rotation input means to rotate the hand differently in the virtual world compared to the rotation of the controller.
+
+\textbf{Why do we want to filter the player's rotational input?}\\
+Rotation filtering can be used to display what is assumed to be the player's intention when they interact with the world. One example could be the intention of the player when they approach a wall with their hand. In this case one assumption would be that the player's intention is to rotate the hand so that the palm faces the wall (See image sequences below). Besides being useful when wanting to adapt the hand to the player's intentions, rotation filtering can also be used in order to reduce the amount of position filtering needed. This means that rotating the hand will allow the distance between the hand and the controller position to be reduced (See image sequence below).
+
+\textbf{How can we filter the player's rotational input?}\\
+Compared to position filtering, the way to implement rotation filtering is very much influenced by the assumptions about the player's intentions. When a player approaches a wall with their hand one assumption could be that the player's intention is to let their hand face the wall palm-first. This would manifest itself as a form of rotation filtering where the hand will rotate when nearing walls. While a player might want to approach a wall palm-first, their intentions might be different when approaching other types of objects like certain smaller grabbable objects which could have a specific pose for the hand to rotate towards. Another parameter which might discern how to adapt the rotation is the angle of approach. When approaching a surface the rotation target might differ depending on if it's the front or the back of the hand that is facing the surface.
+
+Another approach entirely is to let the physics system handle rotation filtering. This at first will not make a difference when the hand is touching an object, but when pressed firmly against a surface the hand will rotate as to reduce the distance between itself and the controller position.
+
+%Filtering on the rotation input means to rotate the hand differently in the world compared to the rotation of the controller. Rotation filtering can be used as a means to display what is assumed would be the player's intention, when they interact with the world. Using rotation filtering can also reduce the amount of position filtering needed in certain cases.
+
+The first of the two figures below show an image sequence of a hand using only rotation filtering and the second figure shows an image sequence of a hand using both position and rotation filtering where the rotation filtering is implemented as palm-first towards the surface.
 
 \missingfigure[figwidth=15cm]{Image sequence: Rotation filtering}
 \missingfigure[figwidth=15cm]{Image sequence: Position and rotation filtering}
@@ -38,6 +92,23 @@
 \item Describe reasons to / effects of using finger position filtering: Reduce position filtering, display player's intentions.
 \item Describe different methods of implementation. Mention differentiation between object types, angles of approach.
 \end{itemize}
+
+\textbf{Questions to answer in this section:}
+\begin{itemize}
+\item What does it mean to filter the player's finger position input?
+\item Why do we want to filter the player's finger position input?
+\item How can we filter the player's finger position input?
+\end{itemize}
+
+\textbf{What does it mean to filter the player's finger position input?}\\
+With the current commercially available controllers for the HTC Vive (and Oculus Rift) the control of individual fingers is limited. There is no tracking of the fingers and there isn't a direct mapping between the buttons available and the control of the fingers. Making the fingers adapt to their environment is therefore the task of the filtering system. The filtering system can bend the fingers individually, placing the finger tip at different locations relative to the rest of the hand.
+
+\textbf{Why do we want to filter the player's finger position input?}\\
+Here, like with the rotation filtering, a certain amount of assumptions have to be made about what the player's intend is. When a player's hand is approaching an object that can be grabbed, their intention might be to bend their fingers towards the object to get a better grip and when they approach a wall it might be to stretch the fingers, especially if in combination with the palm-first rotation filtering.
+
+\textbf{How can we filter the player's finger position input?}\\
+Implementations of finger position filtering include using an animation system to animate the fingers together or individually to different poses and the use of an IK\footnote{Inverse kinematics} system to control finger positions.
+
 
 \missingfigure[figwidth=15cm]{Image sequence: Position and finger position filtering}
 
