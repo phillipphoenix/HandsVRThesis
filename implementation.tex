@@ -1,0 +1,92 @@
+\section{Categorization of approaches}
+\label{sec:categorizationOfApproaches}
+\begin{itemize}
+\item Lead into the explanation for the filter variables.
+\item Display filter variable table.
+\item Describe several examples of filter variable combinations and show image sequences.
+\item (Describe the reasons and effects for filtering on the different variables)?
+\end{itemize}
+
+\missingfigure[figwidth=15cm, figheight=6cm]{Table: Filter variable combinations}
+
+\subsection{Position filtering}
+\label{subsec:categoryPositionFiltering}
+\begin{itemize}
+\item Describe position filtering.
+\item Describe reasons to / effects of using position filtering: Prohibit object penetration.
+\item Describe different methods of implementation. Mention depenetration, physics system.
+\end{itemize}
+
+\missingfigure[figwidth=15cm]{Image sequence: No filtering}
+\missingfigure[figwidth=15cm]{Image sequence: Position filtering}
+
+\subsection{Rotation filtering}
+\label{subsec:categoryRotationFiltering}
+\begin{itemize}
+\item Describe rotation filtering.
+\item Describe reasons to / effects of using rotation filtering: Reduce position filtering, display player's intentions.
+\item Describe different methods of implementation. Mention choice of complexity (simple rotation filtering / vs advances and more nuances rotation filtering), differentiation between object types, angles of approach.
+\end{itemize}
+
+\missingfigure[figwidth=15cm]{Image sequence: Rotation filtering}
+\missingfigure[figwidth=15cm]{Image sequence: Position and rotation filtering}
+
+\subsection{Finger position filtering}
+\label{subsec:categoryFingerFiltering}
+\begin{itemize}
+\item Describe finger position filtering.
+\item Describe reasons to / effects of using finger position filtering: Reduce position filtering, display player's intentions.
+\item Describe different methods of implementation. Mention differentiation between object types, angles of approach.
+\end{itemize}
+
+\missingfigure[figwidth=15cm]{Image sequence: Position and finger position filtering}
+
+\section{Description of how we evaluated hand iterations ...}
+\label{sec:DESCRIPTIONOFEVALUATIONSCENARIOS}
+
+\section{Implementing filtering}
+\label{sec:implementingFiltering}
+Something about how the implementation of each type of filtering can be done in several ways and perhaps how the order of the types used in a combination might create a different feel.
+
+\subsection{Position filtering}
+\label{subsec:implementationPositionFiltering}
+\begin{itemize}
+\item There are different ways to implement position filtering.
+\item Position filtering using depenetration.
+\item Position filtering using the physics system.
+\end{itemize}
+
+\subsection{Rotation filtering}
+\label{subsec:implementationRotationFiltering}
+\begin{itemize}
+\item There are different ways to implement rotation filtering.
+\item Rotation filtering by manually controlling rotation when approaching obstacle.
+\item Rotation filtering using the physics system.
+\end{itemize}
+
+\subsection{Finger position filtering}
+\label{subsec:implementationFingerFiltering}
+\begin{itemize}
+\item There are different ways to implement finger position filtering.
+\item Finger position filtering to avoid obstacles, when approaching them.
+\item Finger position filtering to anticipate player intend, when approaching obstacles.
+\end{itemize}
+
+\section{Hands and their filterings}
+\label{sec:LABELABOUTHANDSVERSIONS}
+\begin{itemize}
+\item Describe each hand and what filtering variables they use.
+\item Relate hands to the above filtering variable descriptions.
+\end{itemize}
+
+\section{Miscellaneous shitz}
+\label{sec:MISCELLANEOUSSHITZ}
+
+\subsection{Hand visualization}
+\label{subsec:handVisualization}
+
+\subsection{Rumblez!}
+\label{subsec:RUMLBEZ}
+
+\subsection{Grabbing system details}
+\label{subsec:grabbingSystem}
