@@ -1,0 +1,128 @@
+\documentclass[12pt, a4paper]{report}
+\author{oslo@itu.dk&ppho@itu.dk}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{appendix}
+%\usepackage[left=3.5cm,right=3.5cm,top=3.3cm,bottom=3.3cm,heightrounded]{geometry} %MS Word kind of margins
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage[numbib,nottoc]{tocbibind} % nottoc removes Contents reference in toc
+\usepackage{titlesec, blindtext}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage{epsfig}
+\usepackage{epstopdf}
+\usepackage{framed, color}
+\usepackage{xcolor,colortbl}
+\usepackage{enumerate}
+\usepackage{tabularx}
+%\usepackage{natbib}
+%\bibliographystyle{abbrvnat}
+%\setcitestyle{authoryear,open={(},close={)}}
+\usepackage{microtype}
+\usepackage[backend=biber,style=authoryear,natbib=true,url=true]{biblatex}
+\usepackage[bookmarks,hidelinks]{hyperref}
+\usepackage[colorinlistoftodos]{todonotes} %Margin todo notes and comments
+%\todo{Plain todonotes.} - add a '%' on the end for a line to the position in text
+%\todo[color=blue!40]{Todonote with a different color.}
+%\todo[nolist]{Todonote that is only shown in the margin and not in the list of todos.}
+%\todo[inline]{testing testing}
+%The command: \listoftodos - This is for rendering a list of todos
+%\setlength{\emergencystretch}{3em} %Accept a little stretch in order to fit lines
+
+%COLORS
+\definecolor{undonecolor}{rgb}{1,0.6,0.6} %Comment/undone color
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9} %Use Case background
+%COLORS
+
+%REFS
+%\bibliographystyle{IEEEtran}
+%\bibliography{IEEEabrv,references.bib}
+%\bibliography{mendeley.bib}
+\addbibresource{bibliography.bib}
+%REFS
+
+\DeclareSourcemap{
+    \maps{
+        \map{ % Replaces '{\_}', '{_}' or '\_' with just '_'
+            \step[fieldsource=url,
+                  match=\regexp{\{\\\_\}|\{\_\}|\\\_},
+                  replace=\regexp{\_}]
+        }
+        \map{ % Replaces '{\#}', '{#}' or '\#' with just '#'
+            \step[fieldsource=url,
+                  match=\regexp{\{\\\#\}|\{\#\}|\\\#},
+                  replace=\regexp{\#}]
+        }
+        \map{ % Replaces '{'$\sim$'}', '$\sim$' or '{~}' with just '~'
+            \step[fieldsource=url,
+                  match=\regexp{\{\$\\sim\$\}|\{\~\}|\$\\sim\$},
+                  replace=\regexp{\~}]
+        }
+    }
+}
+
+%TABLE POSITIONING
+\usepackage{float}
+\restylefloat{table}
+%TABLE POSITIONING
+
+% CHAPTER FORMATTING
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+% CHAPTER FORMATTING
+
+\renewcommand{\arraystretch}{1.5}
+
+% COMMENTING
+\newcommand{\comment}[1]{\colorbox{undonecolor}{#1}}
+% COMMENTING
+
+% COMPACTING LISTS
+\newenvironment{packed_itemize}{
+\begin{itemize}
+  \setlength{\itemsep}{3pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{itemize}}
+% COMPACTING LISTS
+
+\setcounter{secnumdepth}{0} % sections are level 1
+
+\begin{document}
+
+% Include the ITU frontpage!
+%\includepdf{ITUfrontpage.pdf}
+
+\listoftodos
+
+%TITLEPAGE
+\input{titlepage.tex}
+
+%TABLE OF CONTENTS
+\tableofcontents
+\newpage
+
+
+%MAIN CONTENT
+\newgeometry{top=3.9cm}
+
+\chapter{Chapter 1}
+\input{somesection.tex}
+
+\restoregeometry
+\newpage
+
+\chapter{Chapter 2}
+
+%\input{somepage.tex}
+
+%\bibliography{bibliography.bib}
+\printbibliography
+
+\end{document}
