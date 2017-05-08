@@ -101,10 +101,15 @@
 
 \listoftodos
 
-%TITLEPAGE
+% TITLEPAGE
 \input{titlepage.tex}
 
-%TABLE OF CONTENTS
+% ABSTRACT
+\begin{abstract}
+Here is the abstract of the thesis paper.
+\end{abstract}
+
+% TABLE OF CONTENTS
 \tableofcontents
 \newpage
 
@@ -112,13 +117,39 @@
 %MAIN CONTENT
 \newgeometry{top=3.9cm}
 
-\chapter{Chapter 1}
-\input{somesection.tex}
+\chapter{Introduction}
+\label{chap:introduction}
+\input{introduction.tex}
 
 \restoregeometry
 \newpage
 
-\chapter{Chapter 2}
+\chapter{Methodology}
+\label{chap:methodology}
+
+\restoregeometry
+\newpage
+
+\chapter{State of the art}
+\label{chap:stateOfTheArt}
+
+\restoregeometry
+\newpage
+
+\chapter{Implementation / Development}
+\label{chap:implementation}
+
+\restoregeometry
+\newpage
+
+\chapter{Experiments and results}
+\label{chap:experiments}
+
+\restoregeometry
+\newpage
+
+\chapter{Conclusion}
+\label{chap:conclusion}
 
 %\input{somepage.tex}
 
