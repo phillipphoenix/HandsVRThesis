@@ -3,9 +3,14 @@
 \item Introduction should perhaps introduce the topics of this chapter.
 \end{itemize}
 
-This chapter delves into the categorization of approaches that can be taken when implementing hands in VR and which of these were used for the hands implemented during the thesis project.
+\textbf{What is the implementation chapter about?}\\
+This chapter delves into the implementation of several versions of hands for VR. These different versions have similarities and differences in their approach to the problem. In the following sections we will present a categorization of approaches that can be taken when implementing hands in VR, what effect these different approaches have and their pros and cons.
 
-\todo{How much should be explained here about the general approach ie adjust input?}
+\textbf{What stuff did we use during the project?} (headset and control scheme, for instance)\\
+Since we have been using the HTC Vive and its default controllers as input to control the hands our approaches are more applicable to hardware that has the same accordances as these controllers. We use the position and orientation input from the controllers to position and rotate the hands in the virtual space and we use the trigger button to indicate how much the fingers should bend or how closed the hand should be.
+
+\textbf{How does this lead into the categorizations?}\\
+These three inputs are the base of the categorizations of approaches. Each of these inputs can be filtered, by which is meant that the input can be modified or skipped. Filtering on one of the inputs can be seen as using that input as the parameter for a function, which returns a new result. A hand can have a filter for either none of the inputs or one of the inputs or more. Different filtering combinations will give a different behaviour for the hand in the virtual world and might result in the hand seeming more realistic when interacting with its environment.
 
 \section{Categorization of approaches}
 \label{sec:categorizationOfApproaches}
@@ -16,7 +21,7 @@ This chapter delves into the categorization of approaches that can be taken when
 \item (Describe the reasons and effects for filtering on the different variables)?
 \end{itemize}
 
-Hands can be implemented in different ways which will lead to different ways of interacting with the world and a different feel for the player. One way of approaching how to implement hands is to filter the player's input. 3 filtering variables will be described below: position filtering, rotation filtering and finger position fingering. These three filtering variables all filter different player input in order to control the hand in different ways.
+The three player inputs mentioned above (position, orientation and how closed the hand should be) are the base of the categorization of approaches. Each of these inputs can be filtered, by which is meant that the input can be modified or skipped. Filtering on one of the inputs can be seen as using the input as the parameter for a function, which returns a new result which will be used instead of that input. A hand can be implemented with filters on several inputs at once and can have different filters depending on the context. Different filterer combinations will give a different behaviour for the hand in the virtual world and can result in the hand seeming more realistic when interacting with its environment.
 
 \missingfigure[figwidth=15cm, figheight=6cm]{Table: Filter variable combinations}
 
@@ -28,12 +33,11 @@ Hands can be implemented in different ways which will lead to different ways of 
 \item Why do we want to filter the player's positional input?
 \end{itemize}
 
-
 \textbf{What does it mean to filter the player's positional input?}\\
 Filtering on the player's positional input means that in certain cases the hand will deviate from the controller's position.
 
 \textbf{Why do we want to filter the player's positional input?}\\
-\todo{Careful here. Hypothesis is a better word here and I am hesitant to declare it our own. Not embodiment, Sense of Embodiment. Might abreviate to SoE.} One of the assumptions put forward in this paper is that it's possible to increase the player's embodiment by simulating more realistic behaviour for hands around objects in the world. One of the first steps here is to not allow the hands to penetrate objects. By using position filtering to deviate the hand from the controller position when trying to penetrate an object, the hand can interact more realistically with the world.
+One of our hypotheses is that it's possible to increase the player's sense of embodiment by simulating more realistic behaviour for hands around objects in the world. One of the first steps here is to not allow the hands to penetrate objects. By using position filtering to deviate the hand from the controller position when trying to penetrate an object, the hand can interact more realistically with the world.
 
 The following two figures show an image sequence of a hand with no input filtering and an image sequence with a hand that uses position filtering. The second figure shows that the hand is stopping when it reaches the object, whereas in the first figure the hand moves through the object.
 
@@ -50,8 +54,8 @@ The following two figures show an image sequence of a hand with no input filteri
 \begin{itemize}
 \item Reduce position filtering.
 \item Display player's intentions.
-\todo{Diagetically communicate available interactions.}
-\todo{Allows for more detailed hand animation depending on available interactions. Control?}
+\item Diagetically communicate available interactions.
+\item Allows for more detailed hand animation depending on available interactions. Control?
 \end{itemize}
 \end{itemize}
 
