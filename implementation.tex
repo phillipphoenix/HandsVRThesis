@@ -55,9 +55,9 @@ The following two figures show an image sequence of a hand with no input filteri
 \end{itemize}
 
 \textbf{How can we filter the player's positional input?}\\
-The methods of position filtering we have implemented can be split into two distinct categories: a pre-correction method and a post-correction method. Using a pre-correction method in the case of disallowing the penetration of objects means to never allow the hand to enter an object by anticipating the penetration in advance. Using a post-correction method in the same case means to correct the hand's position after the fact.
+The position filters we have implemented can be split into two distinct categories: a pre-collision correction category and a post-collision correction category. Using a pre-collision correction method in the case of disallowing the penetration of objects means to never allow the hand to enter an object by anticipating the penetration in advance. Using a post-collision correction method in the same case means to correct the hand's position after the collision has happened.
 
-The first method we implemented mainly falls into the post-correction category although it also uses some pre-correction techniques as well.
+
 
 
 
