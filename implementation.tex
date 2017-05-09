@@ -34,7 +34,7 @@ The three player inputs mentioned above (position, orientation and how closed th
 \end{itemize}
 
 \textbf{What does it mean to filter the player's positional input?}\\
-Filtering on the player's positional input means that in certain cases the hand will deviate from the controller's position.
+A position filter using the definition above is a function, which when enabled, takes the player's positional input from a controller and returns a new value to be used in its stead. This means that the position of the hand in the virtual world will deviate from the controller position.
 
 \textbf{Why do we want to filter the player's positional input?}\\
 One of our hypotheses is that it's possible to increase the player's sense of embodiment by simulating more realistic behaviour for hands around objects in the world. One of the first steps here is to not allow the hands to penetrate objects. By using position filtering to deviate the hand from the controller position when trying to penetrate an object, the hand can interact more realistically with the world.
@@ -43,6 +43,27 @@ The following two figures show an image sequence of a hand with no input filteri
 
 \missingfigure[figwidth=15cm]{Image sequence: No filtering}
 \missingfigure[figwidth=15cm]{Image sequence: Position filtering}
+
+\textbf{Questions to answer in this section:}
+\begin{itemize}
+\item How can we filter the player's positional input?
+\begin{itemize}
+\item Depenetration.
+\item Physics system.
+\item Different filter methods have different restrictions.
+\end{itemize}
+\end{itemize}
+
+\textbf{How can we filter the player's positional input?}\\
+The methods of position filtering we have implemented can be split into two distinct categories: a pre-correction method and a post-correction method. Using a pre-correction method in the case of disallowing the penetration of objects means to never allow the hand to enter an object by anticipating the penetration in advance. Using a post-correction method in the same case means to correct the hand's position after the fact.
+
+The first method we implemented mainly falls into the post-correction category although it also uses some pre-correction techniques as well.
+
+
+
+Position filtering in the case of disallowing the penetration of objects can be implemented in several ways. One of the methods used during this thesis project is to detect a collision between the hand and an object in the world and take action when such a collision occurs. The manual collision checking can be implemented by checking for nearby object colliders and using ray casts or sweeps to anticipate the collision.
+
+Another implementation uses the physics system to handle collisions between the hands and obstacles in the world. The hands are moved by setting their velocities in such a way that they would reach their target within the current frame.
 
 \subsection{Rotation filtering}
 \label{subsec:categoryRotationFiltering}
@@ -75,6 +96,22 @@ The first of the two figures below shows an image sequence of a hand using only 
 \missingfigure[figwidth=15cm]{Image sequence: Rotation filtering}
 \missingfigure[figwidth=15cm]{Image sequence: Position and rotation filtering}
 
+\textbf{Questions to answer in this section:}
+\begin{itemize}
+\item How can we filter the player's rotational input?
+\begin{itemize}
+\item Manual rotation filtering when approaching obstacles.
+\item Differentiation between object types and angles of approach.
+\item Physics system.
+\end{itemize}
+\end{itemize}
+
+\textbf{How can we filter the player's rotational input?}\\
+Compared to position filtering, the way to implement rotation filtering is very much influenced by the assumptions about the player's intentions. When a player approaches a wall with their hand one assumption could be that the player's intention is to let their hand face the wall palm-first. This would manifest itself as a form of rotation filtering where the hand will rotate when nearing walls. While a player might want to approach a wall palm-first, their intentions might be different when approaching other types of objects like certain smaller grabbable objects which could have a specific pose for the hand to rotate towards. Another parameter which might help decide how to adapt the rotation is the angle of approach. When approaching a surface the rotation target might differ depending on if it's the front or the back of the hand that is facing the surface.
+
+\todo{"pressed firmly"?}
+Another approach entirely is to let the physics system handle rotation filtering. This at first will not make a difference when the hand is touching an object, but when pressed firmly against a surface the hand will rotate as to reduce the distance between itself and the controller position.
+
 \subsection{Finger position filtering}
 \label{subsec:categoryFingerFiltering}
 \textbf{Questions to answer in this section:}
@@ -95,50 +132,7 @@ Here, like with the rotation filtering, a certain amount of assumptions have to 
 
 \missingfigure[figwidth=15cm]{Image sequence: Position and finger position filtering}
 
-\section{Description of how we evaluated hand iterations ...}
-\label{sec:DESCRIPTIONOFEVALUATIONSCENARIOS}
-\todo[inline]{should this be methodology?}
-
-\section{Implementing filtering}
-\label{sec:implementingFiltering}
-Something about how the implementation of each type of filtering can be done in several ways and perhaps how the order of the types used in a combination might create a different feel.
-
-\subsection{Position filtering}
-\label{subsec:implementationPositionFiltering}
 \textbf{Questions to answer in this section:}
-\begin{itemize}
-\item How can we filter the player's positional input?
-\begin{itemize}
-\item Depenetration.
-\item Physics system.
-\item Restrictions by using the different filter methods.
-\end{itemize}
-\end{itemize}
-
-\textbf{How can we filter the player's positional input?}\\
-Position filtering in the case of disallowing the penetration of objects can be implemented in several ways. One of the methods used during this thesis project is to detect a collision between the hand and an object in the world and take action when such a collision occurs. The manual collision checking can be implemented by checking for nearby object colliders and using ray casts or sweeps to anticipate the collision.
-Another implementation uses the physics system to handle collisions between the hands and obstacles in the world. The hands are moved by setting their velocities in such a way that they would reach their target within the current frame.
-
-\subsection{Rotation filtering}
-\label{subsec:implementationRotationFiltering}
-\textbf{Questions to answer in this section:}
-\begin{itemize}
-\item How can we filter the player's rotational input?
-\begin{itemize}
-\item Manual rotation filtering when approaching obstacles.
-\item Differentiation between object types and angles of approach.
-\item Physics system.
-\end{itemize}
-\end{itemize}
-
-\textbf{How can we filter the player's rotational input?}\\
-Compared to position filtering, the way to implement rotation filtering is very much influenced by the assumptions about the player's intentions. When a player approaches a wall with their hand one assumption could be that the player's intention is to let their hand face the wall palm-first. This would manifest itself as a form of rotation filtering where the hand will rotate when nearing walls. While a player might want to approach a wall palm-first, their intentions might be different when approaching other types of objects like certain smaller grabbable objects which could have a specific pose for the hand to rotate towards. Another parameter which might help decide how to adapt the rotation is the angle of approach. When approaching a surface the rotation target might differ depending on if it's the front or the back of the hand that is facing the surface.
-
-\todo{"pressed firmly"?}
-Another approach entirely is to let the physics system handle rotation filtering. This at first will not make a difference when the hand is touching an object, but when pressed firmly against a surface the hand will rotate as to reduce the distance between itself and the controller position.
-
-\subsection{Finger position filtering}
-\label{subsec:implementationFingerFiltering}
 \begin{itemize}
 \item How can we filter the player's finger position input?
 \begin{itemize}
@@ -152,6 +146,10 @@ Another approach entirely is to let the physics system handle rotation filtering
 Implementations of finger position filtering include using an animation system to animate the fingers together or individually to different poses and the use of an Inverse Kinematics (IK) system to infer finger pose from finger tip position and hand position and orientation.
 
 \todo{Obviously you skipped the actual methods?}
+
+\section{Description of how we evaluated hand iterations ...}
+\label{sec:DESCRIPTIONOFEVALUATIONSCENARIOS}
+\todo[inline]{should this be methodology?}
 
 \section{Hands and their filterings}
 \label{sec:LABELABOUTHANDSVERSIONS}
