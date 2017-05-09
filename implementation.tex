@@ -56,17 +56,20 @@ The following two figures show an image sequence of a hand with no input filteri
 \item Display player's intentions.
 \item Diagetically communicate available interactions.
 \item Allows for more detailed hand animation depending on available interactions. Control?
+\item Mention stiffness with only position filtering
 \end{itemize}
 \end{itemize}
 
 \textbf{What does it mean to filter the player's rotational input?}\\
-\todo{Adjusting might be a better word?} Filtering on the rotation input means to rotate the hand differently in the virtual world compared to the rotation of the controller.
+To use a rotation filter is to deviate the hands rotation from the current orientation of the controller. In certain contexts it can be beneficial filter on rotation on order for the hand to seem more alive and realistic. Hands can adapt their rotation in several ways and different approaches might be taken depending on the context. When approaching a wall with their hand a player's intention in the real world might be to place their hand flat on the wall (palm-first). This behaviour can be implemented using a rotation filter, which takes effect when the hand is approaching a surface.
+
+
+\todo[inline]{Adjusting might be a better word?} Filtering on the rotation input means to rotate the hand differently in the virtual world compared to the rotation of the controller.
 
 \textbf{Why do we want to filter the player's rotational input?}\\
-\todo{Mention stiffness with only position filtering}
 Rotation filtering can be used to display what is assumed to be the player's intention when they interact with the world. One example could be the intention of the player when they approach a wall with their hand. In this case a reasonable assumption would be that the player's intention is to rotate the hand so that the palm faces the wall (See image sequences below). Besides being useful when wanting to adapt the hand to the player's intentions, rotation filtering can also be used in order to reduce the amount of position filtering needed. This means that rotating the hand will allow the distance between the hand and the controller due to position adjusting to be reduced (See image sequence below).
 
-\todo{use refs}
+\todo[inline]{use refs}
 The first of the two figures below shows an image sequence of a hand using only rotation filtering and the second figure shows an image sequence of a hand using both position and rotation filtering where the rotation filtering is implemented as palm-first towards the surface.
 
 \missingfigure[figwidth=15cm]{Image sequence: Rotation filtering}
@@ -85,18 +88,17 @@ The first of the two figures below shows an image sequence of a hand using only 
 \end{itemize}
 
 \textbf{What does it mean to filter the player's finger position input?}\\
-\todo{Maybe the whole control scheme thing shouldn't be mentioned here, but earlier as a general premise: hand position and rotation taken from tracking, finger positions from trigger.}
-\todo{With the included/default. There are plenty of commercially available gloves, which still would require us to filter input like with the hand position and rotation. What does "direct mapping" mean?}With the current commercially available controllers for the HTC Vive (and Oculus Rift) the control of individual fingers is limited. There is no tracking of the fingers and there isn't a direct mapping between the buttons available and the control of the fingers. Making the fingers adapt to their environment is therefore the task of the filtering system. The filtering system can bend the fingers individually, placing the finger tip at different locations relative to the rest of the hand.
+Filtering the finger positions is about placing the finger tips in space relatively to the rest of the hand or put differently; stretching and bending the fingers. The fingers can be filtered as a group or individually and different contexts can determine different filters.
 
 \textbf{Why do we want to filter the player's finger position input?}\\
 Here, like with the rotation filtering, a certain amount of assumptions have to be made about what the player's intend is. When a player's hand is approaching an object that can be grabbed, the most common case might be that they are trying to grab the object. If this is the case, adjusting the fingers to form a grip could be a natural behaviour.
-\todo{rewritten}
 
 \missingfigure[figwidth=15cm]{Image sequence: Position and finger position filtering}
 
 \section{Description of how we evaluated hand iterations ...}
 \label{sec:DESCRIPTIONOFEVALUATIONSCENARIOS}
-\todo{should this be methodology?}
+\todo[inline]{should this be methodology?}
+
 \section{Implementing filtering}
 \label{sec:implementingFiltering}
 Something about how the implementation of each type of filtering can be done in several ways and perhaps how the order of the types used in a combination might create a different feel.
@@ -109,7 +111,7 @@ Something about how the implementation of each type of filtering can be done in 
 \begin{itemize}
 \item Depenetration.
 \item Physics system.
-\todo{Restriction}
+\item Restrictions by using the different filter methods.
 \end{itemize}
 \end{itemize}
 
