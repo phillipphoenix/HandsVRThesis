@@ -23,7 +23,22 @@ These three inputs are the base of the categorizations of approaches. Each of th
 
 The three player inputs mentioned above (position, orientation and how closed the hand should be) are the base of the categorization of approaches. Each of these inputs can be filtered, by which is meant that the input can be modified or skipped. Filtering on one of the inputs can be seen as using the input as the parameter for a function, which returns a new result which will be used instead of that input. A hand can be implemented with filters on several inputs at once and can have different filters depending on the context. Different filterer combinations will give a different behaviour for the hand in the virtual world and can result in the hand seeming more realistic when interacting with its environment.
 
-\missingfigure[figwidth=15cm, figheight=6cm]{Table: Filter variable combinations}
+\begin{table}[H]
+\centering
+\caption{Filter variable combinations}
+\label{tab:filterVariableCombinations}
+\begin{tabular}{C{2cm}C{2cm}C{2cm}}
+Position & Rotation & Finger position \\ \midrule \midrule
+         &          &                 \\ \midrule
+\Large X &          &                 \\ \midrule
+         & \Large X &                 \\ \midrule
+         &          & \Large X        \\ \midrule
+\Large X & \Large X &                 \\ \midrule
+\Large X &          & \Large X        \\ \midrule
+         & \Large X & \Large X        \\ \midrule
+\Large X & \Large X & \Large X       
+\end{tabular}
+\end{table}
 
 \subsection{Position filtering}
 \label{subsec:categoryPositionFiltering}

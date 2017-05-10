@@ -5,6 +5,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage{tikz}
+\newcommand{\tikzmark}[1]{\tikz[remember picture,overlay, baseline=-0.5ex]\node (#1){};}
+\newcommand{\connect}[3][3mm]{\tikz[remember picture,overlay]\draw[shorten <=-#1, shorten >=-#1](#2)--(#3);}
 \usepackage{graphicx}
 \usepackage{appendix}
 %\usepackage[left=3.5cm,right=3.5cm,top=3.3cm,bottom=3.3cm,heightrounded]{geometry} %MS Word kind of margins
@@ -19,6 +22,7 @@
 \usepackage{framed, color}
 \usepackage{xcolor,colortbl}
 \usepackage{enumerate}
+\usepackage{booktabs}
 \usepackage{tabularx}
 %\usepackage{natbib}
 %\bibliographystyle{abbrvnat}
@@ -33,6 +37,14 @@
 %\todo[inline]{testing testing}
 %The command: \listoftodos - This is for rendering a list of todos
 %\setlength{\emergencystretch}{3em} %Accept a little stretch in order to fit lines
+
+\usepackage{array}
+% A left-aligned column with a set width (L{3cm}).
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+% A center-aligned column with a set width (C{3cm}).
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+% A right-aligned column with a set width (R{3cm}).
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 %COLORS
 \definecolor{undonecolor}{rgb}{1,0.6,0.6} %Comment/undone color
