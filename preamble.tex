@@ -1,6 +1,5 @@
 \documentclass[12pt, a4paper]{report}
 \author{oslo@itu.dk&ppho@itu.dk}
-
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -28,7 +27,8 @@
 %\bibliographystyle{abbrvnat}
 %\setcitestyle{authoryear,open={(},close={)}}
 \usepackage{microtype}
-\usepackage[backend=biber,style=authoryear,natbib=true,url=true]{biblatex}
+\usepackage[backend=biber,style=apa,natbib=true,url=true]{biblatex}
+\DeclareLanguageMapping{english}{british-apa}
 \usepackage[bookmarks,hidelinks]{hyperref}
 \usepackage[colorinlistoftodos]{todonotes} %Margin todo notes and comments
 %\todo{Plain todonotes.} - add a '%' on the end for a line to the position in text
@@ -55,7 +55,7 @@
 %\bibliographystyle{IEEEtran}
 %\bibliography{IEEEabrv,references.bib}
 %\bibliography{mendeley.bib}
-\addbibresource{bibliography.bib}
+\addbibresource{VRHandsThesis.bib}
 %REFS
 
 \DeclareSourcemap{
@@ -110,9 +110,6 @@
 % Set base path for images.
 \graphicspath{ {Images/} }
 
-
-
-\bibliography{VRHandsThesis.bib}
 
 \begin{document}
 
@@ -171,7 +168,8 @@ Here is the abstract of the thesis paper.
 \label{chap:conclusion}
 
 %\input{somepage.tex}
-
+\restoregeometry
+\newpage
 
 \printbibliography
 
