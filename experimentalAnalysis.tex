@@ -3,22 +3,16 @@
 \item Introduction should perhaps introduce the topics of this chapter.
 \end{itemize}
 
-\section{Methodology}
-\label{sec:methodology}
-Methodology here.
-
 \textbf{What is the implementation chapter about?}\\
-This chapter delves into the development of several prototypes, each portraying different types of behaviour for hands in VR. These different prototypes have similarities and differences in their approach to the problem. In the following sections we will present a categorization of approaches that can be taken when implementing hands in VR, what effect these different approaches have and their pros and cons.
+This chapter delves into the development of 5 prototypes, each portraying a different type of behaviour for hands in VR. These different prototypes approach the problem of realism vs sense of embodiment in different ways and to different degrees. In the following sections, we will present a categorization of approaches that can be taken when implementing hands in VR, what effects these different approaches have and their pros and cons.
 
 \textbf{What stuff did we use during the project?} (headset and control scheme, for instance)\\
-The prototypes have all been developed using the Unity engine which means that to their implementations are restricted by the API that Unity provides. Furthermore, during development and testing, we’ve been using the HTC Vive and its default controllers as the input method for the hands.
-
-Since we have been using the HTC Vive and its default controllers as input to control the hands our approaches are more applicable to hardware that has the same affordances as these controllers. We use the position and orientation input from the controllers to position and rotate the hands in the virtual space and we use the trigger button to indicate how much the fingers should bend or how closed the hand should be.
-
-\todo[inline]{Mention the use of Unity as well.}
+All 5 prototypes have been developed using the Unity engine and an HTC Vive with default controllers for input. The space we’ve explored during the development of the prototypes have been restricted by these choices. Unity has a set of APIs which we as users of Unity have available to us. These APIs have shaped what has been possible for us during implementation of the prototypes. Furthermore, building the prototypes around using the HTC Vive’s controllers as the input method makes our methods and approaches more applicable to hardware that has the same affordances as these. As for the input used to control the hands the position and orientation input is gathered from tracking the controllers and the controllers’ trigger buttons are used to indicate how much the fingers should bend (how closed the hand should be).
 
 \textbf{How does this lead into the categorizations?}\\
-These three inputs are the base of the categorizations of approaches. Each of these inputs can be filtered, by which is meant that the input can be modified or skipped. Filtering on one of the inputs can be seen as using that input as the parameter for a function, which returns a new result. A hand can have a filter for either none of the inputs or one of the inputs or more. Different filtering combinations will give a different behaviour for the hand in the virtual world and might result in the hand seeming more realistic when interacting with its environment.
+These three inputs are the base for different categories of approaches. Each of these inputs can be filtered, by which is meant that the input can be modified or skipped. Filtering on one of the inputs can be seen as using that input as the parameter for a function, which returns a new result. A hand can have a filter for either none of the inputs or one of the inputs or more. Different filtering combinations will give the hand a different behaviour in the virtual world and might result in the hand seeming more realistic when interacting with its environment.
+
+The 5 hand prototypes are named as follows: \textit{Rigid hands}, \textit{Sliding rigid hands}, \textit{Finger rigid hands}, \textit{Physics hands} and \textit{Rotation hands}. They differ in the way they filter on the player’s inputs which gives them a different feel. The detail of which filters and their implementation will be given in the sections below.
 
 \todo[inline]{Maybe structure this chapter so that the different hand prototypes are introduced with their name before going into the specific filtering sections (for instance position filtering). Then inside the filtering sections the hands can be mentioned with their differences. After all the filter sections there can then perhaps be a section that reiterates over the hand prototypes and summarises their filtering implementations.}
 
@@ -116,9 +110,6 @@ Another implementation uses the physics system to handle collisions between the 
 \textbf{What does it mean to filter the player's rotational input?}\\
 To use a rotation filter is to deviate the hands rotation from the current orientation of the controller. In certain contexts it can be beneficial filter on rotation on order for the hand to seem more alive and realistic. Hands can adapt their rotation in several ways and different approaches might be taken depending on the context. When approaching a wall with their hand a player's intention in the real world might be to place their hand flat on the wall (palm-first). This behaviour can be implemented using a rotation filter, which takes effect when the hand is approaching a surface.
 
-
-\todo[inline]{Adjusting might be a better word?} Filtering on the rotation input means to rotate the hand differently in the virtual world compared to the rotation of the controller.
-
 \textbf{Why do we want to filter the player's rotational input?}\\
 Rotation filtering can be used to display what is assumed to be the player's intention when they interact with the world. One example could be the intention of the player when they approach a wall with their hand. In this case a reasonable assumption would be that the player's intention is to rotate the hand so that the palm faces the wall (See image sequences below). Besides being useful when wanting to adapt the hand to the player's intentions, rotation filtering can also be used in order to reduce the amount of position filtering needed. This means that rotating the hand will allow the distance between the hand and the controller due to position adjusting to be reduced (See image sequence below).
 
@@ -186,7 +177,7 @@ Implementations of finger position filtering include using an animation system t
 \label{sec:DESCRIPTIONOFEVALUATIONSCENARIOS}
 \todo[inline]{should this be methodology?}
 
-\section{Hands and their filterings}
+\section{Hands and their filters}
 \label{sec:LABELABOUTHANDSVERSIONS}
 \begin{itemize}
 \item Describe each hand and what filtering variables they use.
