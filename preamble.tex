@@ -110,6 +110,10 @@
 % Set base path for images.
 \graphicspath{ {Images/} }
 
+
+
+\bibliography{VRHandsThesis.bib}
+
 \begin{document}
 
 % Set sans serif font family.
@@ -143,27 +147,22 @@ Here is the abstract of the thesis paper.
 \restoregeometry
 \newpage
 
-\chapter{Methodology}
-\label{chap:methodology}
+\chapter{Theoretical Analysis}
+\label{chap:theory}
+\input{theory.tex}
 
 \restoregeometry
 \newpage
 
-\chapter{State of the art}
-\label{chap:stateOfTheArt}
+\chapter{Experimental Analysis}
+\label{chap:experimentalAnalysis}
+\input{experimentalAnalysis.tex}
 
 \restoregeometry
 \newpage
 
-\chapter{Implementation}
-\label{chap:implementation}
-\input{implementation.tex}
-
-\restoregeometry
-\newpage
-
-\chapter{Experiments and results}
-\label{chap:experiments}
+\chapter{Results}
+\label{chap:results}
 
 \restoregeometry
 \newpage
@@ -173,7 +172,7 @@ Here is the abstract of the thesis paper.
 
 %\input{somepage.tex}
 
-%\bibliography{bibliography.bib}
+
 \printbibliography
 
 \end{document}
