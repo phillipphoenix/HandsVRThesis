@@ -20,6 +20,8 @@ Since we have been using the HTC Vive and its default controllers as input to co
 \textbf{How does this lead into the categorizations?}\\
 These three inputs are the base of the categorizations of approaches. Each of these inputs can be filtered, by which is meant that the input can be modified or skipped. Filtering on one of the inputs can be seen as using that input as the parameter for a function, which returns a new result. A hand can have a filter for either none of the inputs or one of the inputs or more. Different filtering combinations will give a different behaviour for the hand in the virtual world and might result in the hand seeming more realistic when interacting with its environment.
 
+\todo[inline]{Maybe structure this chapter so that the different hand prototypes are introduced with their name before going into the specific filtering sections (for instance position filtering). Then inside the filtering sections the hands can be mentioned with their differences. After all the filter sections there can then perhaps be a section that reiterates over the hand prototypes and summarises their filtering implementations.}
+
 \section{Categorization of approaches}
 \label{sec:categorizationOfApproaches}
 \begin{itemize}
@@ -37,14 +39,14 @@ The three player inputs mentioned above (position, orientation and how closed th
 \label{tab:filterVariableCombinations}
 \begin{tabular}{C{2cm}C{2cm}C{2cm}}
 Position & Rotation & Finger position \\ \midrule \midrule
-         &          &                 \\ \midrule
-\Large X &          &                 \\ \midrule
-         & \Large X &                 \\ \midrule
-         &          & \Large X        \\ \midrule
-\Large X & \Large X &                 \\ \midrule
-\Large X &          & \Large X        \\ \midrule
-         & \Large X & \Large X        \\ \midrule
-\Large X & \Large X & \Large X       
+				&					&					\\ \midrule
+\Large X	&					&					\\ \midrule
+				& \Large X	& 		                \\ \midrule
+				&					& \Large X     \\ \midrule
+\Large X	& \Large X	&					\\ \midrule
+\Large X 	&					& \Large X	\\ \midrule
+				& \Large X	& \Large X	\\ \midrule
+\Large X 	& \Large X 	& \Large X
 \end{tabular}
 \end{table}
 
@@ -91,10 +93,6 @@ The following two figures show an image sequence of a hand with no input filteri
 \textbf{How can we filter the player's positional input?}\\
 The position filters we have implemented can be split into two distinct categories: a pre-collision correction category and a post-collision correction category. Using a pre-collision correction method in the case of disallowing the penetration of objects means to never allow the hand to enter an object by anticipating the penetration in advance. Using a post-collision correction method in the same case means to correct the hand's position after the collision has happened.
 
-
-
-
-
 Position filtering in the case of disallowing the penetration of objects can be implemented in several ways. One of the methods used during this thesis project is to detect a collision between the hand and an object in the world and take action when such a collision occurs. The manual collision checking can be implemented by checking for nearby object colliders and using ray casts or sweeps to anticipate the collision.
 
 Another implementation uses the physics system to handle collisions between the hands and obstacles in the world. The hands are moved by setting their velocities in such a way that they would reach their target within the current frame.
@@ -140,11 +138,14 @@ The first of the two figures below shows an image sequence of a hand using only 
 \end{itemize}
 \end{itemize}
 
-\textbf{How can we filter the player's rotational input?}\\
-Compared to position filtering, the way to implement rotation filtering is very much influenced by the assumptions about the player's intentions. When a player approaches a wall with their hand one assumption could be that the player's intention is to let their hand face the wall palm-first. This would manifest itself as a form of rotation filtering where the hand will rotate when nearing walls. While a player might want to approach a wall palm-first, their intentions might be different when approaching other types of objects like certain smaller grabbable objects which could have a specific pose for the hand to rotate towards. Another parameter which might help decide how to adapt the rotation is the angle of approach. When approaching a surface the rotation target might differ depending on if it's the front or the back of the hand that is facing the surface.
+\todo[inline]{Remember explicit vs implicit rotation filtering (explicit being where we completely control the rotation vs the for instance the physics system controlling it).}
 
-\todo{"pressed firmly"?}
-Another approach entirely is to let the physics system handle rotation filtering. This at first will not make a difference when the hand is touching an object, but when pressed firmly against a surface the hand will rotate as to reduce the distance between itself and the controller position.
+\textbf{How can we filter the player's rotational input?}\\
+Although all our hands use position filtering, only 2 of our 5 hand prototypes (rigid hands, sliding rigid hands, finger rigid hands, physics hands and advanced hands) use rotation filtering.
+
+For the physics hands, we don't use any explicit rotation filtering. The physics system decides the rotation of the hand, when interacting with surfaces. While the controller is within an object, the physics hand can decide to rotate the hand to a flat position (either palm-up or palm-down) in order to reduce the position deviation between the hand and the controller. The rotation happens as a jump and not as a smooth movement towards the surface resulting in a less natural feel during the jump, but a somewhat realistic look afterwards. To improve upon this, explicit rotation filtering could have been added to smoothly rotate the hand to lay flat on the surface, which could remove the jump altogether, but at the same time introduce complexity to the implementation.
+
+Contrary to the physics hands the advanced hands do use explicit rotation filtering. The goal of the rotation filtering for this hand was to always approach a surface palm-first. The main example to explain this choice is the approach of a hand towards a wall. When a player wants to put their hand on a wall, which way would they want to do this? Having an open hand and moving the hand fingers first wouldn't make much sense. It would not give support if the reason for touching the wall was to lean against it, for instance. Rotating the hand so that the palm would be placed firmly on the surface of the wall would make more sense in this case. With this as the main idea behind the rotation, the implementation then had to support this in several cases. The easy case is when the player approaches the wall with an open hand and the palm being closer to the surface than the back of the hand. Depending on the distance to the surface we rotate the palm of the hand the rest of the way until it is directly facing the surface. Another case is what to do when the hand is closed into a fist. In this case, the player is probably trying to punch the wall, which means that the palm shouldn't be facing the wall. Testing for this case isn't necessarily hard in itself, but other cases pile on top of this, including what to do when approaching with the back of the hand, what to do when the player is rotating while the hand is touching the surface and more.
 
 \subsection{Finger position filtering}
 \label{subsec:categoryFingerFiltering}
@@ -191,6 +192,9 @@ Implementations of finger position filtering include using an animation system t
 \item Describe each hand and what filtering variables they use.
 \item Relate hands to the above filtering variable descriptions.
 \end{itemize}
+
+\todo[inline]{Decide on which hand prototypes to include in the paper and what to name them.}
+\todo[inline]{Add a chart here or to the appendix about all the included hand prototypes and which filters they use.}
 
 \section{Miscellaneous shitz}
 \label{sec:MISCELLANEOUSSHITZ}
