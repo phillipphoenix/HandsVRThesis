@@ -1,24 +1,51 @@
-Virtual Reality (VR) game developers and hardware manufactures seem to be in agreement about the importance of motion control for the medium. Major consumer-oriented VR devices like the HTC Vive and now the Oculus Rift with the Touch Controllers have spatially tracked controllers for this purpose \parencite{htcvive2016, oculus2016}. In the About section of their website, Owlchemy Labs, creators of the critically and commercially \parencite{UnityAwards2016, SteamSpyJobSim} acclaimed Job Simulator: the 2050 archives \parencite{OwlchemyLabs2016} declare:
+In our day-to-day lives, we constantly use our hands to hold, operate and otherwise manipulate objects, tools and devices with precision. We use them to gather tactile information about the world and even to communicate with each other through hand gestures and body language. They are a fundamental part of the human body and our way of interacting with the world around us.
+
+The biggest buzzword's in the Virtual Reality (VR) medium: immersion and presence, perhaps point us in the right direction. VR is meant to bring us closer than ever before to experiencing virtual environments as if we were actually in them. Interaction is a big part of experiencing the places we are in. It should hardly be a point of contention then, that having virtual hands that imitate our own real hands can have a significant impact on VR experiences.
+
+VR game developers and hardware manufactures alike have acknowledged this. Major consumer-oriented VR devices like the HTC Vive and now the Oculus Rift with its Touch Controllers have spatially tracked controllers for the users to hold in their hands \parencite{htcvive2016, oculus2016}. In the About section of their website, Owlchemy Labs, creators of the critically and commercially acclaimed \parencite{UnityAwards2016, SteamSpyJobSim} Job Simulator: the 2050 archives \parencite{OwlchemyLabs2016} declare:
 
 \begin{displayquote}
 \textit{We believe that interaction and using your hands is what truly makes virtual reality the most incredible place to build unique content that blows players minds.} \parencite{aboutOwlchemyLabs}
 \end{displayquote}
 
-Immersion and presence, the medium's biggest buzzwords, point us in the right direction. VR is meant to bring us closer than ever before to experiencing virtual environments as if we were actually in them.
+Predictably enough, this is not the end of the story. Even if we had complete tracking of the hands and individual fingers, the physical constraints of the virtual environment would still not apply to the users' real hands, which leaves us with few essentially different options:
 
-Job Simulator was a pioneer giving the player virtual hands they could use to interact with the environment by attaching them to the tracked controllers. It also set a standard in terms of the quality of experience it provided in this regard. By simplifying hard problems and hitting the nail in the head with its humorous tone and aesthetics, it manages to elicit the necessary suspension of disbelief in the player.
+\begin{enumerate}
+\item Prioritize user input and ignore virtual environment constraints whenever there is a conflict in order to always keep the virtual hands aligned with the real hands to the extent allowed by the tracking data.
+\item Separate the virtual hands from the real hands when there is conflict in order to respect the virtual environment's constraints.
+\item Use sensory feedback that makes the users either respect the virtual constraints on their own or feel like they are constrained without actually being so.
+\item Design in a way that circumvents the problem, which means restricting the medium's content to experiences that fit exactly to the medium's current affordances. This means seeing limitations as features and finding experiences that map perfectly to the current systems.
+\end{enumerate}
+
+Our work is focused on the second option, which is seen as an opposing alternative to the first option. We aim to explore how virtual hands can work in this case and investigate whether the user experience can be improved with this approach.
+
+\section{State of the Art}
+\label{sec:stateOfTheArt}
 
 \begin{itemize}
-\item Define Virtual Reality?
-\item VR buzzwords: presence and immersion
+\item Vive and Oculus controller affordances
+\item Gloves, still a problem
+\item SW side. Control schemes; Hand control models: Job Simulator, Wilson's Heart and First Contact.
 \end{itemize}
 
-\section{Example Section}
-\label{sec:exampleSection}
+\section{Research Questions}
+\label{sec:researchQuestions}
 
-Lorem Ipsum
+Explore ways of dealing with the shortcomings of the Job Simulator hand model.
 
-\subsection{Example Subsection}
-\label{subsec:exampleSubsection}
+Specifically, experiment with techniques that separate the virtual hands from the user's own hands in order to make the virtual hands respect the virtual environment's physics constraints. In detail, the virtual hands should:
 
-Lorem Ipsum
+\begin{enumerate}
+\item never penetrate other solid objects.
+\item 
+\end{enumerate}
+
+At the same time, these goals must be attained without losing the desirable properties gained from a 1 to 1 mapping from the player's hands (or the interfacing device) and their hands in the virtual environment:
+
+\begin{enumerate}
+\item Intuitive, easy to understand
+\item Controllable
+\item Stable, consistent
+\end{enumerate}
+
+As secondary objectives, we are interested in finding ways of conveying a sense of the weight of virtual objects when interacting with them and improving the tactility of the virtual hands, improving the feeling of touching virtual objects.
