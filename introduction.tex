@@ -2,7 +2,7 @@ In our day-to-day lives, we constantly use our hands to hold, operate and otherw
 
 The biggest buzzword's in the Virtual Reality (VR) medium: immersion and presence, perhaps point us in the right direction. VR is meant to bring us closer than ever before to experiencing virtual environments as if we were actually in them. Interaction is a big part of experiencing the places we are in. It should hardly be a point of contention then, that having virtual hands that imitate our own real hands can have a significant impact on VR experiences.
 
-VR game developers and hardware manufactures alike have acknowledged this. Major consumer-oriented VR devices like the HTC Vive and now the Oculus Rift with its Touch Controllers have spatially tracked controllers for the users to hold in their hands \parencite{htcvive2016, oculus2016}. In the About section of their website, Owlchemy Labs, creators of the critically and commercially acclaimed \parencite{UnityAwards2016, SteamSpyJobSim} Job Simulator: the 2050 archives \parencite{OwlchemyLabs2016} declare:
+VR game developers and hardware manufactures alike have acknowledged this. Major consumer-oriented VR devices like the HTC Vive, the PlayStation VR  with the PlayStation Move Motion Controllers (PS VR + Move) and the Oculus Rift + Touch have controllers that track the position of your hands in space \parencite{htcvive2016, psvr2016, psmove2010, oculus2016}. In their About page, Owlchemy Labs, the creators of the critically and commercially acclaimed \parencite{UnityAwards2016, SteamSpyJobSim} Job Simulator: the 2050 archives \parencite{OwlchemyLabs2016} declare:
 
 \begin{displayquote}
 \textit{We believe that interaction and using your hands is what truly makes virtual reality the most incredible place to build unique content that blows players minds.} \parencite{aboutOwlchemyLabs}
@@ -14,13 +14,60 @@ Predictably enough, this is not the end of the story. Even if we had complete tr
 \item Prioritize user input and ignore virtual environment constraints whenever there is a conflict in order to always keep the virtual hands aligned with the real hands to the extent allowed by the tracking data.
 \item Separate the virtual hands from the real hands when there is conflict in order to respect the virtual environment's constraints.
 \item Use sensory feedback that makes the users either respect the virtual constraints on their own or feel like they are constrained without actually being so.
-\item Design in a way that circumvents the problem, which means restricting the medium's content to experiences that fit exactly to the medium's current affordances. This means seeing limitations as features and finding experiences that map perfectly to the current systems.
+\item As \parencite{Schell2015} suggests, design in a way that circumvents the problem, which means restricting the medium's content to experiences that fit exactly to the medium's current affordances \parencite{Norman}. This means seeing limitations as features and finding experiences that map perfectly to the current systems.
 \end{enumerate}
 
-Our work is focused on the second option, which is seen as an opposing alternative to the first option. We aim to explore how virtual hands can work in this case and investigate whether the user experience can be improved with this approach.
+The work here presented is focused on the second option, which is seen as a directly opposite alternative to the first. We aim to explore how virtual hands can work in this case and investigate whether the user experience can be improved with this approach.
 
 \section{State of the Art}
 \label{sec:stateOfTheArt}
+
+There is a considerable amount of devices and accesories that are relevant to VR. This work is mainly applicable to those setups that can spatially track the hands of the user to a similar or greater degree than the HTC Vive allows. We are particularly interested in findings that are relevant to the aforementioned HTC Vive, PS VR + Move and the Oculus Rift + Touch because they are currently the most important consumer-oriented devices with these capabilities \parencite{Armstrong2017, SuperDataLLC2017}.
+
+\begin{figure}[H]
+\label{fig:vrControllerComparison}
+\centering
+\includegraphics[width=\textwidth]{vrcontrollersbaselinecomparison2c.png}
+\caption{Comparison of VR controllers and their different input and output capabilities. Retrieved from\parencite{MetanautVR2015}.}
+\end{figure}
+
+Figure \ref{fig:vrControllerComparison} shows the features of the Oculus Touch and the HTC Vive controllers. In the case of the HTC Vive, the most relevant features for our purposes are:
+
+\begin{itemize}
+\item the analogue triggers with digital click at the end, controlled with the index finger, 
+\item the digital grip buttons, pressed with middle, ring and/or pinky fingers,
+\item the joysticks or trackpads, with analog x/y input through capacitive touch and digital click, used with the thumbs
+\item and rumble capabilities (discrete, strength, frequency).
+\end{itemize}
+
+In the case of the Oculus Touch, the relevant features are:
+
+\begin{itemize}
+\item the analogue triggers with capacitive touch, controlled with the index fingers, 
+\item the analogue side triggers, pressed with middle, ring and/or pinky fingers,
+\item and the joysticks, with analog x/y input, digital click capacitive touch, used with the thumbs
+\item and rumble capabilities (discrete, strength, frequency).
+\end{itemize}
+
+Figure \ref{fig:psmoveDiagram} shows the input mechanisms of the PS Move Motion Controller, again, the most relevant features are:
+
+\begin{itemize}
+\item the analogue T buttons, controlled with the index fingers,
+\item several digital buttons controlled by the thumbs
+\item and rumble capabilities.
+\end{itemize}
+
+\begin{figure}[H]
+\label{fig:psmoveDiagram}
+\centering
+\includegraphics[width=\textwidth]{psmovecontroller.jpg}
+\caption{Diagram of the PS Move Motion Controller. T button allows analogue input. Retrieved from \parencite{psmoveDiagram}.}
+\end{figure}
+
+Analogue buttons are useful to allow the users to control the motion of the virtual fingers with similar movements with their own fingers - in Norman's terms, they provide a natural mapping \parencite{Norman} for finger control. Similarly, although without the advantage of being analogue, buttons or areas with capacitive sensors can be used to monitor if the user's fingers are touching the controller or are lifted and stretched, which can allow for guessing the position of the fingers. 
+
+The Oculus Touch is the controller that takes these input mechanisms further having a capacitive trigger for the index finger, capacitive buttons for the thumb and a normal trigger for the other three fingers. This has been used to detect a variety of gestures like index finger pointing, thumbs up (or down), finger guns... It also facilitates common interactions like pressing virtual buttons with your virtual index finger, operating a grabbed object with the same hand that is holding it (e.g. press gun trigger). Both the HTC Vive and PS VR controllers allow for a lower degree of natural finger control.
+
 
 \begin{itemize}
 \item Vive and Oculus controller affordances
