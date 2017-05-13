@@ -89,8 +89,9 @@ Implementing position filtering for hands is about determining how to make the h
 
 As for the prototypes that are implemented using non-physics based methods, their filters are all based on three different approaches to stop the hands from penetrating objects: Sweep and place, skip movement in direction and depenetration. These three methods fall into two categories; pre-collision correction methods and post-collision correction methods. The first two methods fall into the pre-collision correction category, because they try to avoid penetration of objects before it happens, whereas depenetration, which falls into the post-collision correction category will correct the penetration after it has happened. In the different prototypes these three methods are used alone or in combination to create the behaviour wanted from that prototype. The simplest of these prototypes is the Rigid Hands. Here only the depenetration comes into play. Depenetrating the hand from an object means to find the direction and distance in which to move the colliders of the hand in order for the hand and the object not to be overlapping anymore. The direction is to the closest surface and the distance is the distance needed to move for the collider to be outside the object's colliders. When moving the hands in this prototype, their position is simply set to the target position on the controller each frame after which they are depenetrated from any objects they would be overlapping with. Using this method creates very smooth interactions with static objects, but have drawbacks for interacting with dynamic objects (EXPLAIN THESE DRAWBACKS). Since the hand is always depenetrated to the closest surface there is also the drawback of the hand jumping between surfaces, when the controller is places inside a static object. If in one frame the hand is closer to one surface and another surface in the next frame, depenetrating the hand from the object will lead it to move towards another surface creating a jump.
 
-The problem of jumping between surfaces, when using depenetration is what the Sliding rigid hands are trying to solve. They employ the other two methods, Sweep and place and skip movement in direction, in order to combat the jumping between surfaces. The main idea behind this prototype is to try avoiding penetrating an object altogether or if it happens to only penetrate a small amount so that depenetrating the hand would always select the same surface from where it entered the object. Sweeping is about taking the hand and calculating how far in a direction it can move before it hits something. Before moving the hand to the controller position we can sweep and see if it would hit an object on the way. If an object was hit then the hand can be placed there instead of placing it at the controller. This way the hand will not penetrate the object although the controller is inside or on the opposite side of it. In Unity sweeping in a direction will not detect an object if the hand already touches the object. Therefore, in subsequent frames from placing the object on the surface, another method is needed for the hand to not penetrate the object. Skipping movement in a direction is one way to alleviate this problem. When the hand is touching the surface of an object, it shouldn't move in the direction towards the surface, because that would lead the hand to penetrate the object. Therefore, we skip all movement along that direction, essentially only allowing the hand to move on a plane. Moving on a plane works wonders, when interacting with cubes, but has its downsides, when dealing with objects with other shapes. Sliding on a plane might lead the hand to penetrate parts of an object that point out or penetrate other objects. Depenetration helps correct the hands in the situations, where they end up inside an object because correcting in one way leads to errors some place else. These three methods combined should lead to hands that don't penetrate objects, but also doesn't jump between surfaces due to depenetration.
+The problem of jumping between surfaces, when using depenetration is what the Sliding rigid hands are trying to solve. They employ the other two methods, Sweep and place and skip movement in direction, in order to combat the jumping between surfaces. The main idea behind this prototype is to try avoiding penetrating an object altogether or if it happens to only penetrate a small amount so that depenetrating the hand would always select the same surface from where it entered the object. Sweeping is about taking the hand and calculating how far in a direction it can move before it hits something. Before moving the hand to the controller position we can sweep and see if it would hit an object on the way. If an object was hit then the hand can be placed there instead of placing it at the controller. This way the hand will not penetrate the object although the controller is inside or on the opposite side of it. In Unity sweeping in a direction will not detect an object if the hand already touches the object. Therefore, in subsequent frames from placing the object on the surface, another method is needed for the hand to not penetrate the object. Skipping movement in a direction is one way to alleviate this problem. When the hand is touching the surface of an object, it shouldn't move in the direction towards the surface, because that would lead the hand to penetrate the object. Therefore, we skip all movement along that direction, essentially allowing the hand to only move on a plane. Moving on a plane works wonders, when interacting with cubes, but has its downsides, when dealing with objects with other shapes. Sliding on a plane might lead the hand to penetrate parts of an object that point out or penetrate other objects. Depenetration helps correct the hands in the situations, where they end up inside an object because correcting in one way leads to errors some place else. These three methods combined should lead to hands that don't penetrate objects, but also doesn't jump between surfaces due to depenetration.
 
+The two remaining prototypes, the Finger rigid hands and the Rotation hands, both use the methods mentioned above to achieve their position filtering. The Finger rigid hands use the exact same position filtering method as the Rigid hands and the Rotation hands use a filter similar to the Sliding rigid hands with the exception that it doesn't do any depenetration.
 
 \subsection{Rotation filtering}
 \label{subsec:categoryRotationFiltering}
@@ -172,18 +173,27 @@ Here, like with the rotation filtering, a certain amount of assumptions have to 
 \textbf{How can we filter the player's finger position input?}\\
 Implementations of finger position filtering include using an animation system to animate the fingers together or individually to different poses and the use of an Inverse Kinematics (IK) system to infer finger pose from finger tip position and hand position and orientation.
 
-\todo{Obviously you skipped the actual methods?}
+\todo[inline]{Obviously you skipped the actual methods?}
 
-\section{Description of how we evaluated hand iterations ...}
-\label{sec:DESCRIPTIONOFEVALUATIONSCENARIOS}
-\todo[inline]{should this be methodology?}
-
-\section{Hands and their filters}
-\label{sec:LABELABOUTHANDSVERSIONS}
+\section{The hand prototypes}
+\label{sec:theHandPrototypes}
 \begin{itemize}
-\item Describe each hand and what filtering variables they use.
-\item Relate hands to the above filtering variable descriptions.
+\item Introduction to this section.
+\item Describe each hand in detail referring to the filter methods mentioned in the above section.
+\item This section should also describe the setup of the hands and can go into Unity specifics if needed.
 \end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{The hand prototypes and their filters.}
+\label{tab:handPrototypes}
+\begin{tabular}{C{2.8cm}|C{2cm}C{2cm}C{2cm}C{2cm}C{2cm}}
+ & Rigid hands & Sliding rigid hands & Finger rigid hands & Physics hands & Rotation hands \\ \midrule
+Position filter & \Large X & \Large X & \Large X & \Large X & \Large X\\ \midrule
+Rotation filter & & & & \Large X & \Large X \\ \midrule
+Finger position Filter & & & \Large X & \Large X & \Large X 
+\end{tabular}
+\end{table}
 
 \todo[inline]{Decide on which hand prototypes to include in the paper and what to name them.}
 \todo[inline]{Add a chart here or to the appendix about all the included hand prototypes and which filters they use.}
