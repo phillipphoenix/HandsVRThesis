@@ -61,17 +61,17 @@ One of our hypotheses is that it's possible to increase the player's sense of em
 The following two figures show an image sequence of a hand with no input filtering and an image sequence with a hand that uses position filtering. The second figure shows that the hand is stopping when it reaches the object, whereas in the first figure the hand moves through the object.
 
 \begin{figure}[H]
-\label{fig:filtersNone}
 \centering
 \includegraphics[width=\textwidth]{Sequences/FiltersNone/Seq_FiltersNone.png}
 \caption{Sequence showing hand without filters entering obstacle.}
+\label{fig:filtersNone}
 \end{figure}
 
 \begin{figure}[H]
-\label{fig:filtersPosition}
 \centering
 \includegraphics[width=\textwidth]{Sequences/FiltersPosition/Seq_FiltersPosition.png}
 \caption{Sequence showing hand filtering on position. Notice the controller continuing to move into the obstacle.}
+\label{fig:filtersPosition}
 \end{figure}
 
 \textbf{Questions to answer in this section:}
@@ -203,7 +203,6 @@ The process of creating the Rigid hand starts with setting up colliders for the 
 As mentioned above, the Rigid hand moves by setting the rigidbody's position and rotation to the selected position and rotation on the controller. In the case of moving the hand freely around without any collisions occurring the hand just follows the controller. In the case where the hand has penetrated one or more objects we will depenetrate it from the object. To detect if the hand needs to be depenetrated, we need to check if there is an overlap between the hand's colliders and any other colliders in the world. To reduce the number of colliders to check, we first find all colliders within a radius of the hand. Having these colliders we can now check if any of the hand's colliders have penetrated one or more of them. Unity's Physics API allows us to compute the penetration\footnote{Unity API: Physics.ComputePenetration(...)} between two colliders, which gives us the depenetration direction and distance. Iterating over all colliders in both the hand and the penetrated object, we can use the information gathered to move the hand out of the object, correcting the penetration error.
 
 \begin{figure}[H]
-\label{fig:stepByStepRigidHand}
 \centering
 \small
 \begin{enumerate}
@@ -214,6 +213,7 @@ As mentioned above, the Rigid hand moves by setting the rigidbody's position and
 \item Depenetrate the hand based on the penetration information computed in the previous step.
 \end{enumerate}
 \caption{Step-by-step process for moving the Rigid hand.}
+\label{fig:stepByStepRigidHand}
 \end{figure}
 
 
