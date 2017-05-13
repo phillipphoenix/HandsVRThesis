@@ -110,6 +110,9 @@
 
 \begin{document}
 
+% Start without page numbers (by gobbleling them up).
+\pagenumbering{gobble}
+
 % Set sans serif font family.
 \sffamily
 
@@ -130,6 +133,8 @@ Here is the abstract of the thesis paper.
 \tableofcontents
 \newpage
 
+% Set the page numbering to arabic from here.
+\pagenumbering{arabic}
 
 %MAIN CONTENT
 \newgeometry{top=3.9cm}
