@@ -35,6 +35,9 @@
 %The command: \listoftodos - This is for rendering a list of todos
 %\setlength{\emergencystretch}{3em} %Accept a little stretch in order to fit lines
 
+% Allows for customisation of lists and enumerations etc.
+\usepackage{enumitem}
+
 \usepackage{array}
 % A left-aligned column with a set width (L{3cm}).
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -106,7 +109,8 @@
 }{\end{itemize}}
 % COMPACTING LISTS
 
-\setcounter{secnumdepth}{0} % sections are level 1
+% This removes section numbering from all sections and lower levels.
+%\setcounter{secnumdepth}{0}
 
 % Set base path for images.
 \graphicspath{ {Images/} }
