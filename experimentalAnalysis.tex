@@ -211,18 +211,16 @@ Finger position filter & & & \Large X & \Large X & \Large X
 \end{tabular}
 \end{table}
 
-All the hands have one thing in common; the hands require that colliders are set up for their models\footnote{The Rotation hand uses a different model from the rest of the prototypes.}. We use one box collider for the palm of the hand and one for each part of the fingers. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all colliders reside on a specific layer and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc.
+All the hands have three thing in common. First the hands require that colliders are set up for their models\footnote{The Rotation hand uses a different model from the rest of the prototypes.}. We use one box collider for the palm of the hand and one for each part of the fingers. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all colliders reside on a specific layer and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc. The second thing we've used for all hands is Unity's rigidbody component. This component lets the hands interact with the world through the physics system. In Unity a rigidbody component can either be kinematic or non-kinematic. A kinematic rigidbody is not affected by outside sources which means it's not affected by for instance collisions. A non-kinematic rigidbody is affected by outside sources and will be affected by for instance gravity and collisions. All of our hands use kinematic rigidbodies with the exception of the physics hands. The last thing the hands all need is an animation to close the hand. Our animations consist of two frames; one where the hand is fully open and one where the hand is closed. We can blend between the two frames using the trigger value from the controller, which therefore controls how closed the hand is.
 
 \subsection{The Rigid hand}
 \label{subsec:rigidHand}
-The process of creating the Rigid hand starts with setting up colliders for the model. In our case, we used a box collider for the palm of the hand and one for each part of each finger. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all colliders reside on a specific layer and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc. Furthermore, to allow us to use methods like sweep casting in Unity, the hand also needs a kinematic rigidbody. The rigidbody needs to be kinematic, because the physics system shouldn't handle collisions for the Rigid hand. In order to be able to close the fingers the Rigid hand also needs an animation which has two frames: An open hand and a closed hand. The trigger value from the controller can be used to blend between the two frames allowing the player to open and close their hand.
-
 As mentioned above in section \ref{subsec:categoryPositionFiltering}, the Rigid hand moves by setting the rigidbody's position and rotation to the selected position and rotation on the controller. In the case of moving the hand freely around without any collisions occurring the hand just follows the controller. In the case where the hand has penetrated one or more objects we will depenetrate it from the object. To detect if the hand needs to be depenetrated, we need to check if there is an overlap between the hand's colliders and any other colliders in the world. To reduce the number of colliders to check, we first find all colliders within a radius of the hand. Having these colliders we can now check if any of the hand's colliders have penetrated one or more of them. Unity's Physics API allows us to compute the penetration\footnote{Unity API: Physics.ComputePenetration(...)} between two colliders, which gives us the depenetration direction and distance. Iterating over all colliders in both the hand and the penetrated object, we can use the information gathered to move the hand out of the object, correcting the penetration error.
 
 \begin{figure}[H]
 \centering
 \small
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
 \item Move the hand's rigidbody to the target controller.
 \item Orient the hand's rigidbody compared to the target controller.
 \item Find all colliders within a small radius of the hand.
@@ -300,6 +298,22 @@ The touching state:
 
 \subsection{The Physics hand}
 \label{subsec:slidingRigidHand}
+The big difference between the Physics hand and the other prototypes is that it is using a non-kinematic rigidbody and is therefore affected by the physics simulation. This means that it can be pushed around by other objects and the physics system will handle collisions. In for this to work the hands need to be moved and rotated differently from the other hands. Instead of setting their position and orientation directly, velocities are applied which makes the hand move and rotate to where they need to go within the frame. This means that we calculate what velocity is needed for the hand to move the distance between itself and the controller target and the angular velocity needed for the hand to rotate to the controller orientation. In Unity it's important that these velocities are set in the fixed update method, because they need to be applied before the engine's physics calculations takes place.
+
+\begin{figure}[H]
+\centering
+\small
+\begin{enumerate}[noitemsep]
+\item Calculate the angular velocity needed to rotate the hand to the orientation of the controller in this frame and apply it to the hand's rigidbody.
+\item Calculate the velocity needed to move the hand to the position of the controller in this frame and apply it to the hand's rigidbody.
+\end{enumerate}
+\caption{Step-by-step process for moving the Physics hand.}
+\label{fig:stepByStepRigidHand}
+\end{figure}
+
+The obvious benefit gained from using Unity's physics system to handle collisions is that they work more consistently across different cases like flat surfaces, non-flat surfaces, edges, corners and more and each case is handled by Unity instead of by our own code. We also gain other benefits from using the physics system. One of them is the ability to lift objects without having to grab them using a grabbing mechanism activated by for instance pressing the trigger on the controller\footnote{The different grabbing and lifting systems will be explained in section \ref{subsec:grabbingSystem}.}. Another benefit is the ability to get a feeling of weight, when interacting with objects. Often in VR objects of different mass feel indistinguishable from one another, when interacting with them. Except for the visual feedback of size, it's often impossible to gain an impression of how heavy an object should be. Letting the physics system handle interactions with objects allows the hands to portray a sense of mass, by using the mass of both the hand and the object pushed or lifted when calculating the forces applied.
+
+\todo[inline]{Write the mini-conclusion for the physics hand. Include the bad case of the rotation that jumps when the distance to the controller becomes too great.}
 
 \subsection{The Rotation hand}
 \label{subsec:slidingRigidHand}
