@@ -19,6 +19,8 @@ Predictably enough, this is not the end of the story. Even if we had complete tr
 
 The work here presented is focused on the second option, which is seen as a directly opposite alternative to the first. We aim to explore how virtual hands can work in this case and investigate whether the user experience can be improved with this approach.
 
+From this point on, we will refer to this problem as the virtual world constraints problem, to the first option as unadjusted hand model control and to the second option as adjusted hand model.
+
 \section{State of the Art}
 \label{sec:stateOfTheArt}
 
@@ -79,6 +81,52 @@ Other accessories exist that allow for actual positional tracking of the fingers
 
 \subsection{VR Games}
 \label{subsec:vrGames}
+
+The most frequent approach to dealing with the virtual world constraints problem described at the beginning of this chapter is to ignore these constraints when they conflict with the user input. Job Simulator is a prime example of the unadjusted hand model and the one that we have used in our work as a baseline for comparison.
+
+In Job Simulator the hands never separate from the position of the controller, but this still allows for reasonable physical interaction with small, light objects that can be easily moved by the hands. When the hands collide with movable objects, the object is pushed out of the way. However, when the virtual hands collide with objects that cannot be moved by them, the hands will simply go through them as if they weren't there as shown in Figure \ref{fig:jobSimStaticProblem}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/JobSimulator/jomSimStaticProblem.png}
+\caption{Sequence showing the Job Simulator hands entering an unmovable obstacle. Captured in the HTC Vive version.}
+\label{fig:jobSimStaticProblem}
+\end{figure}
+
+At the same time, they avoid the problem of grabbing objects with correct finger placement by hiding the hands when they are holding an object as shown in Figure \ref{fig:jobSimGrabProblem}. This solution is not without merits: it allows the user to see the held object from all angles without the hand obstructing the view, it is simple and surprisingly, it is often not noticed by the users.
+
+Ideally however, we would like the hand to be visible and the fingers to be correctly placed on the grabbed object forming a grip, but without adjusting the virtual hand, this requires the user to be too precise controlling the virtual hands and makes grabbing objects very difficult.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/JobSimulator/jomSimGrabProblem.png}
+\caption{Sequence showing the Job Simulator hands grabbing an object. The hands are hidden while holding objects. Captured in the HTC Vive version.}
+\label{fig:jobSimGrabProblem}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/WilsonsHeart/wilsonPenetration.png}
+\caption{Sequence showing the the hands in Wilson's Heart entering an unmovable object. An X-Ray effect shows the part of the hand inside the object.}
+\label{fig:wilsonPenetration}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/WilsonsHeart/wilsonGrab.png}
+\caption{Sequence showing the pose-snapping grab in Wilson's Heart.}
+\label{fig:wilsonGrab}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/LoneEcho/loneEchoGrip.png}
+\caption{Sequence showing the procedural hand posing system in Lone Echo. Captured from \parencite{loneEchoVideo}.}
+\label{fig:loneEchoGrip}
+\end{figure}
 
 
 \begin{itemize}
