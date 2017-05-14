@@ -19,6 +19,7 @@ The 5 hand prototypes are named as follows: \textit{Rigid hand}, \textit{Sliding
 \section{Categorization of approaches}
 \label{sec:categorizationOfApproaches}
 \begin{itemize}
+\setlength\itemsep{0cm}
 \item Lead into the explanation for the filter variables.
 \item Display filter variable table.
 \item Describe several examples of filter variable combinations and show image sequences.
@@ -48,6 +49,7 @@ Position & Rotation & Finger position \\ \midrule \midrule
 \label{subsec:categoryPositionFiltering}
 \textbf{Questions to answer in this section:}
 \begin{itemize}
+\setlength\itemsep{0cm}
 \item What does it mean to filter the player's positional input?
 \item Why do we want to filter the player's positional input?
 \end{itemize}
@@ -76,6 +78,7 @@ The following two figures show an image sequence of a hand with no input filteri
 
 \textbf{Questions to answer in this section:}
 \begin{itemize}
+\setlength\itemsep{0cm}
 \item How can we filter the player's positional input?
 \begin{itemize}
 \item Depenetration.
@@ -87,7 +90,7 @@ The following two figures show an image sequence of a hand with no input filteri
 \textbf{How can we filter the player's positional input?}\\
 Implementing position filtering for hands is about determining how to make the hand follow the controller. All of our 5 prototypes use position filtering, but the implementations of the filters differ. The first distinction is between physics bases and non-physics based methods. The physics hand is the only one of our prototypes that falls into the first category. The way the physics hand is moved towards the controller is to set the velocity each frame so that the hand will reach the controller within the next frame using the physics system. Using velocities and the physics system to move the hand has several positive aspects. The main gain of using the physics system to move is that it adheres to the rules of the system, including collisions, which means that the hand will not penetrate objects in the world which have colliders. Using the physics system to avoid penetration is very efficient since it's one of the core features of the Unity engine. One of the downsides of using the physics system to handle collisions and more is that we as the developers have no direct control over the inner workings of the system and therefore lose some control of how the hand behaves.
 
-As for the prototypes that are implemented using non-physics based methods, their filters are all based on three different approaches to stop the hands from penetrating objects: Sweep and place, skip movement in direction and depenetration. These three methods fall into two categories; pre-collision correction methods and post-collision correction methods. The first two methods fall into the pre-collision correction category, because they try to avoid penetration of objects before it happens, whereas depenetration, which falls into the post-collision correction category will correct the penetration after it has happened. In the different prototypes these three methods are used alone or in combination to create the behaviour wanted from that prototype. The simplest of these prototypes is the Rigid hand. Here only the depenetration comes into play. Depenetrating the hand from an object means to find the direction and distance in which to move the colliders of the hand in order for the hand and the object not to be overlapping anymore. The direction is to the closest surface and the distance is the distance needed to move for the collider to be outside the object's colliders. When moving the hands in this prototype, their position is simply set to the target position on the controller each frame after which they are depenetrated from any objects they would be overlapping with. Using this method creates very smooth interactions with static objects, but have drawbacks for interacting with dynamic objects (EXPLAIN THESE DRAWBACKS). Since the hand is always depenetrated to the closest surface there is also the drawback of the hand jumping between surfaces, when the controller is places inside a static object. If in one frame the hand is closer to one surface and another surface in the next frame, depenetrating the hand from the object will lead it to move towards another surface creating a jump.
+As for the prototypes that are implemented using non-physics based methods, their filters are all based on three different approaches to stop the hands from penetrating objects: Sweep and place, skip movement in direction and depenetration. These three methods fall into two categories; pre-collision correction methods and post-collision correction methods. The first two methods fall into the pre-collision correction category, because they try to avoid penetration of objects before it happens, whereas depenetration, which falls into the post-collision correction category will correct the penetration after it has happened. In the different prototypes these three methods are used alone or in combination to create the behaviour wanted from that prototype. The simplest of these prototypes is the Rigid hand. Here only the depenetration comes into play. Depenetrating the hand from an object means to find the direction and distance in which to move the colliders of the hand in order for the hand and the object not to be overlapping anymore. The direction is to the closest surface and the distance is the distance needed to move for the collider to be outside the object's colliders. When moving the hands in this prototype, their position is simply set to the target position on the controller each frame after which they are depenetrated from any objects they would be overlapping with. Using this method creates very smooth interactions with static objects, but have drawbacks for interacting with dynamic objects (\textbf{\textit{EXPLAIN THESE DRAWBACKS}}). Since the hand is always depenetrated to the closest surface there is also the drawback of the hand jumping between surfaces, when the controller is places inside a static object. If in one frame the hand is closer to one surface and another surface in the next frame, depenetrating the hand from the object will lead it to move towards another surface creating a jump.
 
 The problem of jumping between surfaces, when using depenetration is what the Sliding rigid hand is trying to solve. They employ the other two methods, Sweep and place and skip movement in direction, in order to combat the jumping between surfaces. The main idea behind this prototype is to try avoiding penetrating an object altogether or if it happens to only penetrate a small amount so that depenetrating the hand would always select the same surface from where it entered the object. Sweeping is about taking the hand and calculating how far in a direction it can move before it hits something. Before moving the hand to the controller position we can sweep and see if it would hit an object on the way. If an object was hit then the hand can be placed there instead of placing it at the controller. This way the hand will not penetrate the object although the controller is inside or on the opposite side of it. In Unity sweeping in a direction will not detect an object if the hand already touches the object. Therefore, in subsequent frames from placing the object on the surface, another method is needed for the hand to not penetrate the object. Skipping movement in a direction is one way to alleviate this problem. When the hand is touching the surface of an object, it shouldn't move in the direction towards the surface, because that would lead the hand to penetrate the object. Therefore, we skip all movement along that direction, essentially allowing the hand to only move on a plane. Moving on a plane works wonders, when interacting with cubes, but has its downsides, when dealing with objects with other shapes. Sliding on a plane might lead the hand to penetrate parts of an object that point out or penetrate other objects. Depenetration helps correct the hands in the situations, where they end up inside an object because correcting in one way leads to errors some place else. These three methods combined should lead to hands that don't penetrate objects, but also doesn't jump between surfaces due to depenetration.
 
@@ -98,6 +101,7 @@ The two remaining prototypes, the Finger rigid hand and the Rotation hand, both 
 \textbf{Questions to answer in this section:}
 \todo{Alternative term: orientation}
 \begin{itemize}
+\setlength\itemsep{0cm}
 \item What does it mean to filter the player's rotational input?
 \item Why do we want to filter the player's rotational input?
 \begin{itemize}
@@ -123,6 +127,7 @@ The first of the two figures below shows an image sequence of a hand using only 
 
 \textbf{Questions to answer in this section:}
 \begin{itemize}
+\setlength\itemsep{0cm}
 \item How can we filter the player's rotational input?
 \begin{itemize}
 \item Manual rotation filtering when approaching obstacles.
@@ -144,6 +149,7 @@ Contrary to the physics hand the Rotation hand uses explicit rotation filtering.
 \label{subsec:categoryFingerFiltering}
 \textbf{Questions to answer in this section:}
 \begin{itemize}
+\setlength\itemsep{0cm}
 \item What does it mean to filter the player's finger position input?
 \item Why do we want to filter the player's finger position input?
 \begin{itemize}
@@ -178,11 +184,14 @@ Implementations of finger position filtering include using an animation system t
 \section{The hand prototypes}
 \label{sec:theHandPrototypes}
 \begin{itemize}
+\setlength\itemsep{0cm}
 \item Introduction to this section.
 \item Describe each hand in detail referring to the filter methods mentioned in the above section.
 \item This section should also describe the setup of the hands and can go into Unity specifics if needed.
 \item Mention the controller target position and rotation.
 \end{itemize}
+
+This section will go into depth about how each of the five hand prototypes have been implemented, mention the pros and cons of the different approaches and finally a step-by-step process for creating the behaviour of the prototype will be presented. The table below (\ref{tab:handPrototypes}) stands as a reminder of what filters each of the hand prototypes implements.
 
 \begin{table}[H]
 \centering
@@ -192,9 +201,11 @@ Implementations of finger position filtering include using an animation system t
  & Rigid hand & Sliding rigid hand & Finger rigid hand & Physics hand & Rotation hand \\ \midrule
 Position filter & \Large X & \Large X & \Large X & \Large X & \Large X\\ \midrule
 Rotation filter & & & & \Large X & \Large X \\ \midrule
-Finger position Filter & & & \Large X & \Large X & \Large X 
+Finger position filter & & & \Large X & \Large X & \Large X 
 \end{tabular}
 \end{table}
+
+All the hands have one thing in common; the hands require that colliders are set up for their models\footnote{The Rotation hand uses a different model from the rest of the prototypes.}. We use one box collider for the palm of the hand and one for each part of the fingers. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all colliders reside on a specific layer and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc.
 
 \subsection{The Rigid hand}
 \label{subsec:theRigidHand}
