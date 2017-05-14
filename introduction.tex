@@ -21,13 +21,6 @@ The work here presented is focused on the second option, which is seen as a dire
 
 From this point on, we will refer to this problem as the virtual world constraints problem, to the first option as unadjusted hand control model and to the second option as adjusted hand control model.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{vrcontrollersbaselinecomparison2c.png}
-\caption{Comparison of VR controllers and their different input and output capabilities. Retrieved from\parencite{MetanautVR2015}.}
-\label{fig:vrControllerComparison}
-\end{figure}
-
 \section{State of the Art}
 \label{sec:stateOfTheArt}
 
@@ -36,7 +29,12 @@ From this point on, we will refer to this problem as the virtual world constrain
 
 There is a considerable amount of devices and accesories that are relevant to VR. This work is mainly applicable to those setups that can spatially track the hands of the user to a similar or greater degree than the HTC Vive allows. We are particularly interested in findings that are relevant to the aforementioned HTC Vive, PS VR + Move and the Oculus Rift + Touch because they are currently the most important consumer-oriented devices with these capabilities \parencite{Armstrong2017, SuperDataLLC2017}.
 
-
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{vrcontrollersbaselinecomparison2c.png}
+\caption{Comparison of VR controllers and their different input and output capabilities. Retrieved from\parencite{MetanautVR2015}.}
+\label{fig:vrControllerComparison}
+\end{figure}
 
 There are differences between the Head Mounted Displays (HMD) of these devices, but for the most part, they are not relevant for our area of focus, so they will not be discussed here.
 
@@ -68,7 +66,7 @@ Figure \ref{fig:psmoveDiagram} shows the input mechanisms of the PS Move Motion 
 \item and rumble capabilities.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{psmovecontroller.jpg}
 \caption{Diagram of the PS Move Motion Controller. T button allows analogue input. Retrieved from \parencite{psmoveDiagram}.}
@@ -88,7 +86,7 @@ The most frequent approach to dealing with the virtual world constraints problem
 
 In Job Simulator the hands never separate from the position of the controller, but this still allows for reasonable physical interaction with small, light objects that can be easily moved by the hands. When the hands collide with movable objects, the object is pushed out of the way. However, when the virtual hands collide with objects that cannot be moved by them, the hands will simply go through them as if they weren't there as shown in Figure \ref{fig:jobSimStaticProblem}.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Sequences/JobSimulator/jomSimStaticProblem.png}
 \caption{Sequence showing the Job Simulator hands entering an unmovable obstacle. Captured in the HTC Vive version.}
@@ -99,7 +97,7 @@ At the same time, they avoid the problem of grabbing objects with correct finger
 
 Ideally however, we would like the hand to be visible and the fingers to be correctly placed on the grabbed object forming a grip, but without adjusting the virtual hand, this requires the user to be too precise controlling the virtual hands and makes grabbing objects very difficult.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Sequences/JobSimulator/jomSimGrabProblem.png}
 \caption{Sequence showing the Job Simulator hands grabbing an object. The hands are hidden while holding objects. Captured in the HTC Vive version.}
@@ -108,7 +106,7 @@ Ideally however, we would like the hand to be visible and the fingers to be corr
 
 Very recently, a few games have started to show approaches to hand control that fall within the adjusted hand model. One these is Wilson's Heart \parencite{TwistedPixelGames2017}, released in April this year. Each object that the user can interact with has a predefined hand pose and when certain conditions are met, the hands will snap to the pose as shown in Figure \ref{fig:wilsonGrab}. These conditions usually have to do with the user pressing some of the triggers or buttons that control the virtual fingers although there are also poses that are triggered by moving the hands close enough to the objects.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Sequences/WilsonsHeart/wilsonGrab.png}
 \caption{Sequence showing the pose-snapping grab in Wilson's Heart.}
@@ -119,7 +117,7 @@ This technique is interesting because the virtual hands can separate a lot from 
 
 The pose-snapping method allows perfect placement of the fingers and looks great in pictures, but it requires a lot of manual work to setup every interactible object in the game and it takes away a lot of control from the users, forcing them to interact with each object exactly in the ways that the poses allow.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Sequences/WilsonsHeart/wilsonPenetration.png}
 \caption{Sequence showing the the hands in Wilson's Heart entering an unmovable object. An X-Ray effect shows the part of the hand inside the object.}
@@ -134,7 +132,7 @@ This approach will inevitably come at the cost of having some edge cases that do
 
 Figure \ref{fig:loneEchoGrip} tries to show the procedural hand posing shown in some of the available footage from the game, but in this case particularly - and in general for the other frame sequences included in this work - we encourage the reader to watch the linked videos and .gifs because a few frames can't possibly do them justice.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Sequences/LoneEcho/loneEchoGrip.png}
 \caption{Sequence showing the procedural hand posing system in Lone Echo. Captured from video \parencite{loneEchoVideo}.}
