@@ -54,7 +54,7 @@ In the case of the Oculus Touch, the relevant features are:
 \begin{itemize}
 \item the analogue triggers with capacitive touch, controlled with the index fingers, 
 \item the analogue side triggers, pressed with middle, ring and/or pinky fingers,
-\item and the joysticks, with analog x/y input, digital click capacitive touch, used with the thumbs
+\item the joysticks, with analog x/y input, digital click capacitive touch, used with the thumbs
 \item and rumble capabilities (discrete, strength, frequency).
 \end{itemize}
 
@@ -104,14 +104,7 @@ Ideally however, we would like the hand to be visible and the fingers to be corr
 \label{fig:jobSimGrabProblem}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Sequences/WilsonsHeart/wilsonPenetration.png}
-\caption{Sequence showing the the hands in Wilson's Heart entering an unmovable object. An X-Ray effect shows the part of the hand inside the object.}
-\label{fig:wilsonPenetration}
-\end{figure}
-
-
+Very recently, a few games have started to show approaches to hand control that fall within the adjusted hand model. One these is Wilson's Heart \parencite{TwistedPixelGames2017}, released in April this year. Each object that the user can interact with has a predefined hand pose and when certain conditions are met, the hands will snap to the pose as shown in Figure \ref{fig:wilsonGrab}. These conditions usually have to do with the user pressing some of the triggers or buttons that control the virtual fingers although there are also poses that are triggered by moving the hands close enough to the objects.
 
 \begin{figure}[H]
 \centering
@@ -120,39 +113,48 @@ Ideally however, we would like the hand to be visible and the fingers to be corr
 \label{fig:wilsonGrab}
 \end{figure}
 
+This technique is interesting because the virtual hands can separate a lot from the position of the real hands and very suddenly too. The underlying idea is that user's will want to interact with each object in a certain way and will on their own pose their hands in a similar way to the object's pose, so when the pose snapping happens, the change will be small and, most importantly, aligned with the user's intention. 
+
+The pose-snapping method allows perfect placement of the fingers and looks great in pictures, but it requires a lot of manual work to setup every interactible object in the game and it takes away a lot of control from the users, forcing them to interact with each object exactly in the ways that the poses allow.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/WilsonsHeart/wilsonPenetration.png}
+\caption{Sequence showing the the hands in Wilson's Heart entering an unmovable object. An X-Ray effect shows the part of the hand inside the object.}
+\label{fig:wilsonPenetration}
+\end{figure}
+
+Figure \ref{fig:wilsonPenetration} shows that the other issue identified with the Job Simulator hands is mostly unsolved in Wilson's Heart. The hands can still go through unmovable objects, but in this case, an X-Ray style effect is used to visualize the parts of the hands that are inside of objects. This communicates the state of the hands to the player, but might not be preferable to other techniques that make the virtual hands respect the virtual world's physics.
+
+The most novel and promising attempt within the adjusted hand model that we are aware of however, is an upcoming game called Lone Echo \parencite{ReadyAtDawn}. In this game, the virtual hands procedurally adapt to the virtual environment. Once again, the underlying principle is adjusting the virtual hand in a way that doesn't conflict with the user's intentions, but in this case instead of using authored poses the use of a real-time algorithm can make the system extremely flexible. At its best, this approach could empower the user and make them feel more control over their virtual hands by not forcing the interaction with objects to one specific pose. At its worse, there might be situations where the algorithm doesn't behave in a way that matches the user's natural way of interacting with their hands which would have the opposite effect.
+
+This approach will inevitably come at the cost of having some edge cases that don't look as good authored poses, but in terms of development work, scales much better with the amount of objects in the virtual environment and these edge cases might be so rare that they barely impact the experience.
+
+Figure \ref{fig:loneEchoGrip} tries to show the procedural hand posing shown in some of the available footage from the game, but in this case particularly - and in general for the other frame sequences included in this work - we encourage the reader to watch the linked videos and .gifs because a few frames can't possibly do them justice.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Sequences/LoneEcho/loneEchoGrip.png}
-\caption{Sequence showing the procedural hand posing system in Lone Echo. Captured from \parencite{loneEchoVideo}.}
+\caption{Sequence showing the procedural hand posing system in Lone Echo. Captured from video \parencite{loneEchoVideo}.}
 \label{fig:loneEchoGrip}
 \end{figure}
-
-
-\begin{itemize}
-\item Vive and Oculus controller affordances
-\item Gloves, still a problem
-\item SW side. Control schemes; Hand control models: Job Simulator, Wilson's Heart and First Contact.
-\end{itemize}
 
 \section{Research Questions}
 \label{sec:researchQuestions}
 
-Explore ways of dealing with the shortcomings of the Job Simulator hand model.
+This work explores ways of dealing with the virtual world constraints problem previously described: how can we deal with the conflict between wanting the virtual hands to imitate the user's real hands and at the same time respect the virtual environment?
 
-Specifically, experiment with techniques that separate the virtual hands from the user's own hands in order to make the virtual hands respect the virtual environment's physics constraints. In detail, the virtual hands should:
-
-\begin{enumerate}
-\item never penetrate other solid objects.
-\item 
-\end{enumerate}
-
-At the same time, these goals must be attained without losing the desirable properties gained from a 1 to 1 mapping from the player's hands (or the interfacing device) and their hands in the virtual environment:
+We see this problem manifesting itself specially prominently in two use cases:
 
 \begin{enumerate}
-\item Intuitive, easy to understand
-\item Controllable
-\item Stable, consistent
+\item The user places his real hand in a way that would make the corresponding virtual hand be inside of another virtual solid object.
+\item The user wants to grab a virtual object but doesn't position the controller and otherwise produce the input that would in a strict simulation allow their virtual hand to lift the object.
 \end{enumerate}
 
-As secondary objectives, we are interested in finding ways of conveying a sense of the weight of virtual objects when interacting with them and improving the tactility of the virtual hands, improving the feeling of touching virtual objects.
+These properties should be pursued without losing the degree of control, consistency and intuitiveness that existing unadjusted hand models provide. In sum, the degree of "hand presence" (term commonly used in the VR industry \parencite{Bye2016}) achieved by this model cannot be lost in favor of these goals. The question this work addresses is whether "hand presence" can be improved by dealing with the virtual environment constraints problem.
+
+As secondary objectives, we are interested in finding ways of conveying a sense of the weight of virtual objects when interacting with them and improving the tactility of the virtual hands, improving the feeling of touching virtual objects, which are also aspects currently unsatisfactorily addressed.
+
+Therefore, we are trying to reduce the existing gap between the user's real body and their virtual body and compensate for imprecise user input. In terms of the user's perceptual, sensory experience, it might be possible to improve how hands are controlled in VR.
+
+We focus on experimenting with different ways of adjusting the virtual hands' pose, exploring possible adjusted hand models. We will use the Job Simulator hand model, a great example of an unadjusted hand model, as a reference and baseline to compare our experiments with.
