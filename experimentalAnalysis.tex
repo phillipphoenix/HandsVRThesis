@@ -211,18 +211,16 @@ Finger position filter & & & \Large X & \Large X & \Large X
 \end{tabular}
 \end{table}
 
-All the hands have one thing in common; the hands require that colliders are set up for their models\footnote{The Rotation hand uses a different model from the rest of the prototypes.}. We use one box collider for the palm of the hand and one for each part of the fingers. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all colliders reside on a specific layer and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc.
+All the hands have three thing in common. First the hands require that colliders are set up for their models\footnote{The Rotation hand uses a different model from the rest of the prototypes.}. We use one box collider for the palm of the hand and one for each part of the fingers. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all colliders reside on a specific layer and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc. The second thing we've used for all hands is Unity's rigidbody component. This component lets the hands interact with the world through the physics system. In Unity a rigidbody component can either be kinematic or non-kinematic. A kinematic rigidbody is not affected by outside sources which means it's not affected by for instance collisions. A non-kinematic rigidbody is affected by outside sources and will be affected by for instance gravity and collisions. All of our hands use kinematic rigidbodies with the exception of the physics hands. The last thing the hands all need is an animation to close the hand. Our animations consist of two frames; one where the hand is fully open and one where the hand is closed. We can blend between the two frames using the trigger value from the controller, which therefore controls how closed the hand is.
 
 \subsection{The Rigid hand}
 \label{subsec:rigidHand}
-The process of creating the Rigid hand starts with setting up colliders for the model. In our case, we used a box collider for the palm of the hand and one for each part of each finger. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all colliders reside on a specific layer and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc. Furthermore, to allow us to use methods like sweep casting in Unity, the hand also needs a kinematic rigidbody. The rigidbody needs to be kinematic, because the physics system shouldn't handle collisions for the Rigid hand. In order to be able to close the fingers the Rigid hand also needs an animation which has two frames: An open hand and a closed hand. The trigger value from the controller can be used to blend between the two frames allowing the player to open and close their hand.
-
-As mentioned above, the Rigid hand moves by setting the rigidbody's position and rotation to the selected position and rotation on the controller. In the case of moving the hand freely around without any collisions occurring the hand just follows the controller. In the case where the hand has penetrated one or more objects we will depenetrate it from the object. To detect if the hand needs to be depenetrated, we need to check if there is an overlap between the hand's colliders and any other colliders in the world. To reduce the number of colliders to check, we first find all colliders within a radius of the hand. Having these colliders we can now check if any of the hand's colliders have penetrated one or more of them. Unity's Physics API allows us to compute the penetration\footnote{Unity API: Physics.ComputePenetration(...)} between two colliders, which gives us the depenetration direction and distance. Iterating over all colliders in both the hand and the penetrated object, we can use the information gathered to move the hand out of the object, correcting the penetration error.
+As mentioned above in section \ref{subsec:categoryPositionFiltering}, the Rigid hand moves by setting the rigidbody's position and rotation to the selected position and rotation on the controller. In the case of moving the hand freely around without any collisions occurring the hand just follows the controller. In the case where the hand has penetrated one or more objects we will depenetrate it from the object. To detect if the hand needs to be depenetrated, we need to check if there is an overlap between the hand's colliders and any other colliders in the world. To reduce the number of colliders to check, we first find all colliders within a radius of the hand. Having these colliders we can now check if any of the hand's colliders have penetrated one or more of them. Unity's Physics API allows us to compute the penetration\footnote{Unity API: Physics.ComputePenetration(...)} between two colliders, which gives us the depenetration direction and distance. Iterating over all colliders in both the hand and the penetrated object, we can use the information gathered to move the hand out of the object, correcting the penetration error.
 
 \begin{figure}[H]
 \centering
 \small
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
 \item Move the hand's rigidbody to the target controller.
 \item Orient the hand's rigidbody compared to the target controller.
 \item Find all colliders within a small radius of the hand.
@@ -233,16 +231,92 @@ As mentioned above, the Rigid hand moves by setting the rigidbody's position and
 \label{fig:stepByStepRigidHand}
 \end{figure}
 
+\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype. Like a mini-conclusion.}
+
 \subsection{The Sliding rigid hand}
 \label{subsec:slidingRigidHand}
-The Sliding rigid hand is state based with three different states: Outside, touching and inside. These three states each let the hand behave differently and are used in different contexts. Each frame one of these three states will be executed. The state which will be executed will be determined in the beginning of the frame depending on information from the last state executed and from the current context.
+The Sliding rigid hand is state based with two different states: Outside and touching. The two states let the hand behave differently and are used in different contexts. Each frame one of these states will be executed. The state which will be executed will be determined in the beginning of the frame depending on information from the last state executed and from the current context.
 
-The outside state is executed, when the hand is not touching or inside an object. When executed the hand is first rotated to the orientation of the controller target. After rotating the hand we sweep towards the controller, checking if there’s any object in between the hand and the controller. If no obstacle was in the way, the hand is moved towards the controller. If an object is blocking the path then we position the hand so that it is touching the object. Unity’s SweepTest method on the Rigidbody class gives us the necessary information to do so: direction and distance to the object that was blocking the path.
+The outside state is executed, when the hand is not touching an object. When executed the hand is first rotated to the orientation of the controller target. After rotating the hand we sweep towards the controller, checking if there's any object in between the hand and the controller. If no obstacle was in the way, the hand is moved towards the controller. If an object is blocking the path then we position the hand so that it is touching the object. Unity's SweepTest method on the Rigidbody class gives us the necessary information to do so: direction and distance to the object that was blocking the path.
 \todo[inline]{Make sure that the sliding rigid hand works without the sliding in the outside state. Else write about the sliding as well.}
 
-There is only one transition from the outside state, which is to the touching state. If the sweep detected an object in between the hand and the controller, while executing the outside state, the hand will have been placed on the surface of the object. In this case we will switch to the touching state. If nothing was obstructing the path the hand stays in the outside state.
+There is only one transition from the outside state to the touching state; if the sweep detected an object in between the hand and the controller, while executing the outside state, the hand will have been placed on the surface of the object. In this case we will switch to the touching state. If nothing was obstructing the path the hand stays in the outside state.
 
 As with the outside state, the first thing that happens in the touching state is that we rotate the hand so that it matches the orientation target of the controller. Because we rotated the hand, while it was touching an object we need to check two things; if the rotation has caused the hand to be removed from touching the surface of the object or if the rotation has resulted in the hand having penetrated the object. First, we check if the hand is inside an obstacle and depenetrates it if necessary. This is done in the same fashion as mentioned for the Rigid hand(REF). If the hand wasn't inside any object we try to sweep towards the controller position to check if the hand is currently not touching any object. If the sweep resulted in hitting an object in the path towards the controller, we move towards the location hit on that object. This works like mentioned in the outside state above with one small addition. We need to save the normal of the point where the hand touches the surface. When we use Unity's SweepTest method we gain some information about the object hit, if any. This includes the normal of the point that the sweep with the hand hit. We need this normal for the next part: sliding. Sliding is where we skip movement in a particular direction (and its opposite), effectively moving the hand on a plane. This particular direction is movement along the normal and its opposite. An example of sliding in use is when the hand is interacting with a flat surface and the controller is inside the surface. When moving the controller right or left, for instance, the hand should slide on the plane created by the normal of the contact point, which is approximately the same as sliding across the surface, if the contact point is updated frequently. To implement the sliding we first find the vector between the hand and the target on the controller. This vector is projected onto the plane created with the normal. Moving the hand along this new projected vector reduces the distance to the controller without penetrating the object. As a final step for the touching state, the hand is depenetrated again to make sure it's not inside an object after sliding. To summarize, the touching state rotates the hand and then checks if the hand has now been removed from or placed inside an object. If it has, it first moves it to the touching position again, but then it slides the hand to the position on the surface which is the closest to the controller.
+
+There are two transitions from the touching state back to the open state. The first transition checks if the controller has moved back outside the object compared to the surface the hand is currently touching. The direction from the hand's current position and that of the controller is computed. If the direction is in the same general direction as the normal of the surface\footnote{To determine if the direction vector points in the same general direction as the normal, we use the dot product of the two. If the dot product is positive they are pointing in the same general direction.}, it means that the controller was moved back outside the object in the direction from where it entered. In this case the hand goes to the outside state. The other transition checks if we can sweep with the hand to the controller. If we can sweep all the way without hitting any objects it means that the hand has slid over an edge and the controller is currently free of any objects. Due to how Unity's SweepTest method is implemented, it's necessary to move the hand slightly away from the object's surface. When the object is touched sweeping doesn't recognize the object being hit. We move the hand slightly back in the direction of the normal of the touch point, before sweeping. In the case we hit something, the hand is still touching a surface and we stay in the touching state. If not the hand transitions into the outside state.
+
+\begin{figure}[H]
+\small
+Select the state to execute:
+\begin{enumerate}[noitemsep,label=\alph*.]
+\item If the last state executed was outside, transition to the touching state if:
+\begin{enumerate}[noitemsep,label=\arabic*.]
+\item the sweep during the last outside state execution hit an object.
+\end{enumerate}
+\item If the last state executed was touching, transition to the outside state if:
+\begin{enumerate}[noitemsep,label=\arabic*.]
+\item the controller was moved away from the currently touched surface (in the general direction of the normal of the contact point), or
+\item the sweeping towards the controller didn't hit any object.
+\end{enumerate}
+\end{enumerate}
+% first column
+\begin{minipage}[t]{0.49\textwidth}
+\small
+The outside state:
+\begin{enumerate}[noitemsep]
+\item Orient the hand's rigidbody compared to the target controller.
+\item Sweep towards the target controller.
+\item If no obstacles in the path between the hand and the controller, move the hand's rigidbody to the target controller.
+\item Else move to the position where the sweep hit the obstacle.
+\end{enumerate}
+\end{minipage}
+\hspace{2em}% <---- Don't forget this %
+%second column
+\begin{minipage}[t]{0.49\textwidth}
+\small
+The touching state:
+\begin{enumerate}[noitemsep]
+\item Orient the hand's rigidbody compared to the target controller.
+\item Check if inside object and depenetrate if so.
+\item If the hand was not inside an object, sweep towards the target controller.
+\item If the sweep hit an object, the controller was not touching. Position the hand on the object hit using the sweep information.
+\item Use the normal of the contact point to define a plane on which to slide to minimize the distance to the controller.
+\item Check if sliding the hand has led it to penetrating an object and depenetrate if so.
+\end{enumerate}
+\end{minipage}
+\caption{Step-by-step process for moving the Sliding rigid hand.}
+\label{fig:stepByStepSlidingRigidHand}
+\end{figure}
+
+\todo[inline]{Maybe split the sliding rigid hand step-by-step figure into two figures, so it can be split over two pages.}
+
+\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype. Like a mini-conclusion.}
+
+\subsection{The Finger rigid hand}
+\label{subsec:slidingRigidHand}
+
+\subsection{The Physics hand}
+\label{subsec:slidingRigidHand}
+The big difference between the Physics hand and the other prototypes is that it is using a non-kinematic rigidbody and is therefore affected by the physics simulation. This means that it can be pushed around by other objects and the physics system will handle collisions. In for this to work the hands need to be moved and rotated differently from the other hands. Instead of setting their position and orientation directly, velocities are applied which makes the hand move and rotate to where they need to go within the frame. This means that we calculate what velocity is needed for the hand to move the distance between itself and the controller target and the angular velocity needed for the hand to rotate to the controller orientation. In Unity it's important that these velocities are set in the fixed update method, because they need to be applied before the engine's physics calculations takes place.
+
+\begin{figure}[H]
+\centering
+\small
+\begin{enumerate}[noitemsep]
+\item Calculate the angular velocity needed to rotate the hand to the orientation of the controller in this frame and apply it to the hand's rigidbody.
+\item Calculate the velocity needed to move the hand to the position of the controller in this frame and apply it to the hand's rigidbody.
+\end{enumerate}
+\caption{Step-by-step process for moving the Physics hand.}
+\label{fig:stepByStepRigidHand}
+\end{figure}
+
+The obvious benefit gained from using Unity's physics system to handle collisions is that they work more consistently across different cases like flat surfaces, non-flat surfaces, edges, corners and more and each case is handled by Unity instead of by our own code. We also gain other benefits from using the physics system. One of them is the ability to lift objects without having to grab them using a grabbing mechanism activated by for instance pressing the trigger on the controller\footnote{The different grabbing and lifting systems will be explained in section \ref{subsec:grabbingSystem}.}. Another benefit is the ability to get a feeling of weight, when interacting with objects. Often in VR objects of different mass feel indistinguishable from one another, when interacting with them. Except for the visual feedback of size, it's often impossible to gain an impression of how heavy an object should be. Letting the physics system handle interactions with objects allows the hands to portray a sense of mass, by using the mass of both the hand and the object pushed or lifted when calculating the forces applied.
+
+\todo[inline]{Write the mini-conclusion for the physics hand. Include the bad case of the rotation that jumps when the distance to the controller becomes too great.}
+
+\subsection{The Rotation hand}
+\label{subsec:slidingRigidHand}
 
 \section{Miscellaneous shitz}
 \label{sec:MISCELLANEOUSSHITZ}
