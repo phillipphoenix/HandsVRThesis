@@ -86,22 +86,7 @@ The first of the two figures below shows an image sequence of a hand using only 
 \missingfigure[figwidth=15cm]{Image sequence: Rotation filtering}
 \missingfigure[figwidth=15cm]{Image sequence: Position and rotation filtering}
 
-\textbf{Questions to answer in this section:}
-\begin{itemize}
-\setlength\itemsep{-0.1cm}
-\item How can we filter the player's rotational input?
-\begin{itemize}
-\setlength\itemsep{-0.1cm}
-\item Manual rotation filtering when approaching obstacles.
-\item Differentiation between object types and angles of approach.
-\item Physics system.
-\end{itemize}
-\end{itemize}
-
-\todo[inline]{Remember explicit vs implicit rotation filtering (explicit being where we completely control the rotation vs the for instance the physics system controlling it).}
-
-\textbf{How can we filter the player's rotational input?}\\
-Although all our hand prototypes use position filters, only 2 of our 5 hand prototypes (Physics hand and Rotation hand) use rotation filtering.
+Although all our hand prototypes use position filters, only two of our five hand prototypes (Physics hand and Rotation hand) use rotation filtering.
 
 For the physics hand, we don't use any explicit rotation filtering. The physics system decides the rotation of the hand, when interacting with surfaces. While the controller is within an object, the physics hand can decide to rotate the hand to a flat position (either palm-up or palm-down) in order to reduce the position deviation between the hand and the controller. The rotation happens as a jump and not as a smooth movement towards the surface resulting in a less natural feel during the jump, but a somewhat realistic look afterwards. To improve upon this, explicit rotation filtering could have been added to smoothly rotate the hand to lay flat on the surface, which could remove the jump altogether, but at the same time introduce complexity to the implementation.
 
@@ -191,7 +176,7 @@ As mentioned above in section \ref{subsec:categoryPositionFiltering}, the Rigid 
 \label{fig:stepByStepRigidHand}
 \end{figure}
 
-\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype. Like a mini-conclusion.}
+\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype: The mini-conclusion.}
 
 \subsection{The Sliding rigid hand}
 \label{subsec:slidingRigidHand}
@@ -253,7 +238,7 @@ The touching state:
 
 \todo[inline]{Maybe split the sliding rigid hand step-by-step figure into two figures, so it can be split over two pages.}
 
-\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype. Like a mini-conclusion.}
+\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype: The mini-conclusion.}
 
 \subsection{The Finger rigid hand}
 \label{subsec:slidingRigidHand}
@@ -303,7 +288,7 @@ As the final thing after having adjusted the fingers, we again want to move the 
 \label{fig:stepByStepFingerRigidHand}
 \end{figure}
 
-\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype. Like a mini-conclusion.}
+\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype: The mini-conclusion.}
 
 \subsection{The Physics hand}
 \label{subsec:slidingRigidHand}
@@ -317,7 +302,9 @@ The Physics hand has several states that indicate whether the fingers should fil
 
 As mentioned above the fingers positions are only filtered in three of the five states: The Holding state, the Hover state, the Lerp to free state. The Free and Fist states don't filter the input but lets the fingers follow the animation and trigger button value directly. In the Holding state the finger positions are filtered by skipping the input completely. The fingers are fixed, while holding objects. The Hover state is where the most interesting filtering happens. It has several steps to find the positions for the fingers. First of all we skip placing the fingers, if the grabbable the hand was hovering over is no longer within the grab area. In the next frame the hand will transition out of the Hover state because of this, as mentioned above. If there is a grabbable object in the grab area we first place the fingers in accordance to the animation and trigger button value to use as the starting position.
 
-What the Hover state tries to achieve is to find suitable positions on the surface of the grabbable object on where to place the fingers. We try three different methods in priority to find the best location for each finger. The first of the three methods is to find the point on the grabbable that is the closest to the fingertip\footnote{Unity's API allows us to find the closest point on a collider from a given point by using the $Collider.ClosestPoint$ method on the collider in question.}. The next method is to find the point on the surface found by moving along the negative up vector of the fingertip, so finding a point on the object that is directly below the fingertip. For this we use raycasting from the fingertip in the direction of the negative up vector of the fingertip. The final method is to find some direction in between the negative up vector of the fingertip and the direction towards the closest point on the grabbable object. In order to find this middle direction we lerp between the vectors for the direction to the closest point and the negative up vector with respects to a middle interpolation value\footnote{This value is a value between 0 and 1, where 0 returns the start lerping vector and 1 returns the end lerping vector. Using different values moves the position found for the fingers in between the two given direction vectors. We use the value 0.86 for our Physics hand.}. The last two methods are not guaranteed to hit the grabbable object at all. The priority of the three methods is as follows; first we see if moving along the direction which is in between the negative up and the direction to the closest point hits a point on the grabbable object. If it does, we use that point as the position the finger needs to move to. If it didn't hit, we try with the negative up from the fingertip and if it hits, we use that hit point as the position to move the finger to. If none of the above methods resulted in a point on the grabbable object then the closest point on the object is used as the target for the finger. The reason for this prioritization has to do with certain placements of the hand compared to the grabbable object and the grabbable object's shape. If the closest point was always used and the hand was hovering over a grabbable cube with the palm on one of the surfaces and the fingers sticking out over the edge, the result would lead to the two furthest joints in the fingers both bending about 90 degrees without the joint between the fingers and the palm bending much, which is not a natural pose and is therefore not ideal (\textbf{\textit{IMAGE REQUIRED TO SHOW EXAMPLE WITH CUBE}}). The same will occur when hovering over thin objects like sticks or bats. The closest position on the grabbable from the fingertips will be close to the palm resulting in the weird pose. Using the negative up vector of the fingertips will also not work in a lot of cases. If we again look at the example with the grabbable cube. If the hand is completely open and the fingers are sticking out over the edge, moving along the negative up vector will not lead to a hit on the cube. Because of this, having a middle point between the closest point and the negative up can help in these cases by bending the fingers towards the grabbable object, but with a more natural pose than what results from the closest point. When the positions for the fingertips have been found by using one of these methods we lerp the IK targets of the fingers towards the found positions, as to smooth the movement to the found positions, after which we call the IK system to solve for the new position.
+What the Hover state tries to achieve is to find suitable positions on the surface of the grabbable object on where to place the fingers. We try three different methods in priority to find the best location for each finger. The first of the three methods is to find the point on the grabbable that is the closest to the fingertip\footnote{Unity's API allows us to find the closest point on a collider from a given point by using the $Collider.ClosestPoint$ method on the collider in question.}. The next method is to find the point on the surface found by moving along the negative up vector of the fingertip, so finding a point on the object that is directly below the fingertip. For this we use raycasting from the fingertip in the direction of the negative up vector of the fingertip. The final method is to find some direction in between the negative up vector of the fingertip and the direction towards the closest point on the grabbable object. In order to find this middle direction we lerp between the vectors for the direction to the closest point and the negative up vector with respects to a middle interpolation value\footnote{This value is a value between 0 and 1, where 0 returns the start lerping vector and 1 returns the end lerping vector. Using different values moves the position found for the fingers in between the two given direction vectors. We use the value 0.86 for our Physics hand.}. The last two methods are not guaranteed to hit the grabbable object at all. The priority of the three methods is as follows; first we see if moving along the direction which is in between the negative up and the direction to the closest point hits a point on the grabbable object. If it does, we use that point as the position the finger needs to move to. If it didn't hit, we try with the negative up from the fingertip and if it hits, we use that hit point as the position to move the finger to. If none of the above methods resulted in a point on the grabbable object then the closest point on the object is used as the target for the finger. The reason for this prioritization has to do with certain placements of the hand compared to the grabbable object and the grabbable object's shape. If the closest point was always used and the hand was hovering over a grabbable cube with the palm on one of the surfaces and the fingers sticking out over the edge, the result would lead to the two furthest joints in the fingers both bending about 90 degrees without the joint between the fingers and the palm bending much, which is not a natural pose and is therefore not ideal (\textbf{\textit{REF: Image about cube example}}). The same will occur when hovering over thin objects like sticks or bats. The closest position on the grabbable from the fingertips will be close to the palm resulting in the weird pose. Using the negative up vector of the fingertips will also not work in a lot of cases. If we again look at the example with the grabbable cube. If the hand is completely open and the fingers are sticking out over the edge, moving along the negative up vector will not lead to a hit on the cube. Because of this, having a middle point between the closest point and the negative up can help in these cases by bending the fingers towards the grabbable object, but with a more natural pose than what results from the closest point. When the positions for the fingertips have been found by using one of these methods we lerp the IK targets of the fingers towards the found positions, as to smooth the movement to the found positions, after which we call the IK system to solve for the new position.
+
+\missingfigure[figwidth=15cm]{Diagram: Cube example and why the middle direction is important.}
 
 \begin{figure}[H]
 \centering
@@ -375,8 +362,6 @@ Finger positions:
 \caption{Step-by-step process for placing the Physics hand's fingers.}
 \label{fig:stepByStepPhysicsHandFingers}
 \end{figure}
-
-\todo[inline]{Update the step-by-step figure to include the fingers as well.}
 
 The obvious benefit gained from using Unity's physics system to handle collisions is that they work more consistently across different cases like flat surfaces, non-flat surfaces, edges, corners and more and each case is handled by Unity instead of by our own code. We also gain other benefits from using the physics system. One of them is the ability to lift objects without having to grab them using a grabbing mechanism activated by for instance pressing the trigger on the controller\footnote{The different grabbing and lifting systems will be explained in section \ref{subsec:grabbingSystem}.}. Another benefit is the ability to get a feeling of weight, when interacting with objects. Often in VR objects of different mass feel indistinguishable from one another, when interacting with them. Except for the visual feedback of size, it's often impossible to gain an impression of how heavy an object should be. Letting the physics system handle interactions with objects allows the hands to portray a sense of mass, by using the mass of both the hand and the object pushed or lifted when calculating the forces applied.
 
