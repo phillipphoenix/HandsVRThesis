@@ -124,7 +124,7 @@ All the hands have three thing in common. First the hands require that colliders
 
 Another thing worth mentioning before continuing to the implementation details for each of the hand prototypes is what the target position and rotation of the hand is. The placement of the hand compared to the controller is a decision that impacts how the user will move the controller around to interact with objects and how the hand feels to use. We chose to place the hand compared to the controller in the virtual world in the same way the user's real hand is placed according to the controller in the real world. As shown in Figure \ref{fig:handControllerPlacement}, the right hand is placed to the right of the controller in a position that could grab and hold the controller. The left hand goes on the left side of the controller but is otherwise the same as the right hand. Our reasoning behind this choice was to map the hand as closely to the position of the user's hands in the real world. From now on, when the controller's position and orientation is mentioned, it's the position and orientation the hands display in this image that we're referring to.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.85\textwidth]{HandControllerPlacementBoth.png}
 \caption{Two images showing the placement of the hands compared to the controllers.}
@@ -149,9 +149,7 @@ As mentioned above in section \ref{subsec:categoryPositionFiltering}, the Rigid 
 \label{fig:stepByStepRigidHand}
 \end{figure}
 
-\todo[inline]{Some of the drawbacks that should be mentioned above (see bold text) are that most things have to be manually handled instead of being handled by the physics system. This includes collision detection but also stuff like pushing a dynamic object into a static object.}
-
-\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype: The mini-conclusion.}
+\todo[inline]{Write a small conclusion for the rigid hand stating the good and the bad things about it. One of the good things about the Rigid hand is that it's very simple to implement as we did. The disadvantages include: using a kinematic rigidbody removes some of the good things that the physics system handles, when using non-kinematic rigidbodies. We have to handle a lot of things by ourselves, like pushing several dynamic objects into each other or into static objects with the hands is very unstable. Collision detection is also manual and can have edge cases that aren't solved.}
 
 \subsection{The Sliding rigid hand}
 \label{subsec:slidingRigidHand}
@@ -213,7 +211,7 @@ The touching state:
 
 \todo[inline]{Maybe split the sliding rigid hand step-by-step figure into two figures, so it can be split over two pages.}
 
-\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype: The mini-conclusion.}
+\todo[inline]{Write a small conclusion for the Sliding rigid hand. This should include what it does well and where it fails. It works very well on flat or rounded surfaces, but has a lot of edge cases, when it comes to concave shapes and edges and corners of objects. Besides this, it has the same disadvantages as the rigidhand, since it's also using a kinematic rigidbody.}
 
 \subsection{The Finger rigid hand}
 \label{subsec:fingerRigidHand}
@@ -263,7 +261,7 @@ As the final thing after having adjusted the fingers, we again want to move the 
 \label{fig:stepByStepFingerRigidHand}
 \end{figure}
 
-\todo[inline]{Write about the good and bad cases and pros and cons for this hand prototype: The mini-conclusion.}
+\todo[inline]{Write a small conclusion for the Finger rigid hand. This should include what it does well and where it fails. This hand has a lot of the same disadvantages and problems as the rigid hand, on which it is based. Adding the fingers on top adds more edge cases, where the fingers behave weirdly and not as intended or expected.}
 
 \subsection{The Physics hand}
 \label{subsec:physicsHand}
@@ -338,7 +336,7 @@ Finger positions:
 
 The obvious benefit gained from using Unity's physics system to handle collisions is that they work more consistently across different cases like flat surfaces, non-flat surfaces, edges, corners and more and each case is handled by Unity instead of by our own code. We also gain other benefits from using the physics system. One of them is the ability to lift objects without having to grab them using a grabbing mechanism activated by for instance pressing the trigger on the controller\footnote{The different grabbing and lifting systems will be explained in section \ref{subsec:grabbingSystem}.}. Another benefit is the ability to get a feeling of weight, when interacting with objects. Often in VR objects of different mass feel indistinguishable from one another, when interacting with them. Except for the visual feedback of size, it's often impossible to gain an impression of how heavy an object should be. Letting the physics system handle interactions with objects allows the hands to portray a sense of mass, by using the mass of both the hand and the object pushed or lifted when calculating the forces applied.
 
-\todo[inline]{Write the mini-conclusion for the physics hand. Include the bad case of the rotation that jumps when the distance to the controller becomes too great. Moving fingers affect rigidbody and makes it move.}
+\todo[inline]{Write a small conclusion for the Physics hand. This should include what it does well and where it fails. Some of the benefits are already stated above. Some of the cons about out implementation of the Physics hand include: Not handling the rotation explicitly results in a jump, when the distance between the controller and the hand is too large. Furthermore, when moving the fingers, it changes the shape of the rigidbody, which in turn makes the rigidbody move. Because of this the rigidbody needs quite a high value for drag to stop it from shaking.}
 
 \subsection{The Rotation hand}
 \label{subsec:rotationHand}
@@ -382,15 +380,19 @@ Finger positions:
 \label{fig:stepByStepRotationHand}
 \end{figure}
 
-\todo[inline]{Write the mini-conclusion for the Rotation hand}
+\todo[inline]{Write a small conclusion for the Rotation hand. This should include what it does well and where it fails. The rotation hand's palm rotation works pretty well, but it could do with some improvements, like not rotating when approaching the wall with the back of the hand (essentially adding more cases for different behaviour). Furthermore, the fingers are not looking too nice and often penetrate the object it's interacting with, since only the finger tips are depenetrated.}
 
 \section{Real hand visualization}
 \label{subsec:handVisualization}
 
+\todo[inline]{Because the hand separates from the controller, when the controller is put into objects in the virtual world, we decided to implement a wireframe hand representing where the hand would have been, if no filters had been applied to it. This shows the player where there "real world" hand is in the virtual space and also shows that the filtering is intentional and that we still know where their real hand is.}
+
 \section{Rumble}
 \label{subsec:rumble}
 
-\todo[inline]{Perhaps merge the hand visualization and rumble sections into one about enhancements to the experience or something.}
+\todo[inline]{The section about rumble is just a short section about how we tried to implement rumble into our demoes and how it didn't work out too well. First off we had too much rumble and on too many things and in the short time we had to try and fix it, we made only slight improvements to that. Perhaps the section will focus more on what rumble can be used for.}
 
 \section{The grabbing system}
 \label{subsec:grabbingSystem}
+
+\todo[inline]{We've implemented several different types of grabbing, although we ended up using one type for our demoes. The types include: parenting, using a fixed joint and setting velocities (like the way we set the velocities for the Physics hand). These different grabbing types have different pros and cons attached to them. Furthermore, describe our grabbable component, which is used to detect if an object can be grabbed and is also used for finger filtering to show when the hand is hovering close enough to a grabbable object for it to be grabbed.}
