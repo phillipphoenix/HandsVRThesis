@@ -45,7 +45,7 @@ The following two figures (Figure \ref{fig:filtersNone} and Figure \ref{fig:filt
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Sequences/FiltersPosition/Seq_FiltersPosition.png}
-\caption{Sequence showing hand filtering on position. Notice the controller continuing to move into the obstacle.}
+\caption{Sequence showing hand filtering on position. Notice that while the hand stays the controller continues to move into the obstacle.}
 \label{fig:filtersPosition}
 \end{figure}
 
@@ -63,11 +63,21 @@ To use a rotation filter is to deviate the hands rotation from the current orien
 
 Another reason to use rotation filtering would be about avoiding penetration of objects. Besides being an example of how the hands could feel more natural when approaching walls, the reason for rotating the hand to be palm first when getting close to the surface could also be to avoid penetrating the wall. When the hand rotates, the fingers are rotated away from the wall as well, letting the hand get closer to the wall before it starts penetrating it. Using rotation filtering as a means of avoidance also has the goal of reducing the amount of position filtering needed, by allowing the hand to get closer to the controller position, while still being constrained by objects in the world. Rotation filtering is also a big part of pose snapping, which was mentioned Section \ref{sec:stateOfTheArt}. Pose snapping can be used to show available interactions, for instance in Figure \ref{fig:wilsonGrab} from Wilson's Heart, where the hands snap to a pose when they near the suction cups attached to the player's head. Pose snapping of course works much better in unison with both finger position filtering and position filtering.
 
-\todo[inline]{use refs}
-The first of the two figures below (Figure REF) shows an image sequence of a hand using only rotation filtering and the second figure (Figure REF) shows an image sequence of a hand using both position and rotation filtering where the rotation filtering is implemented as palm-first towards the surface.
+The first of the two figures below (Figure \ref{fig:filtersRotation}) shows an image sequence of a hand using only rotation filtering and the second figure (Figure \ref{fig:filtersPositionRotation}) shows an image sequence of a hand using both position and rotation filtering where the rotation filtering is implemented as palm-first towards the surface. It should be noticeable that in the first sequence in the last frame, the hand has entered the obstacle. Using rotation filtering allowed the hand to move closer to the surface before it started penetrating it, but it doesn't stop it completely. Combining the rotation filter with a position filter has the effect of completely stopping it from penetrating the obstacle.
 
-\missingfigure[figwidth=15cm]{Image sequence: Rotation filtering}
-\missingfigure[figwidth=15cm]{Image sequence: Position and rotation filtering}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/FiltersRotation/Seq_FiltersRotation.png}
+\caption{Sequence showing hand filtering on rotation. In the last frame the hand has penetrated the obstacle.}
+\label{fig:filtersRotation}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/FiltersPositionRotation/Seq_FiltersPositionRotation.png}
+\caption{Sequence showing hand filtering on both position and rotation. In the last frame the hand stays on the surface.}
+\label{fig:filtersPositionRotation}
+\end{figure}
 
 Although all our hand prototypes use position filters, only two of our five hand prototypes (Physics hand and Rotation hand) use rotation filtering.
 
@@ -77,30 +87,22 @@ Contrary to the Physics hand, the Rotation hand uses explicit rotation filtering
 
 \subsection{Finger position filtering}
 \label{subsec:categoryFingerFiltering}
-\textbf{Questions to answer in this section:}
-\begin{itemize}
-\setlength\itemsep{-0.1cm}
-\item What does it mean to filter the player's finger position input?
-\item Why do we want to filter the player's finger position input?
-\begin{itemize}
-\setlength\itemsep{-0.1cm}
-\item Reduce position filtering.
-\item Display player's intention.
-\end{itemize}
-\end{itemize}
-
 Above is mentioned that the player can control the fingers of the hand by pressing the trigger button on the controller. The hand prototypes all have animations that allow them to be either open or closed into a fist. When filtering on the finger positions the target positions of the fingers, or where we want to place the fingers, deviates from the location indicated by the closed value of the hand.
 
 There are two main reasons for wanting to filter the finger positions. The first reason is relatable to the reason to filter on position; we want the fingers and the hand in general to avoid penetrating objects. By bending the fingers when approaching a surface of an object the hand can move closer to the surface before it starts penetrating, for instance, which reduces how much position filtering is needed. Furthermore, the fingers might also bend individually, which is especially noticeable around edges of objects. Our Finger rigid hand and Rotation hand uses finger position filtering to avoid penetrating objects. The other reason for wanting to filter on finger positions is about indicating whether an object hovered over is interactive or not. In Job Simulator, the fingers bend slightly when the hand is within range of an object that can be grabbed, but they all bend the same amount, though, making the hand look quite robotic. The fingers can of course be filtered individually, which can put the hand in a pose that looks like the hand could be stroking the surface or getting a grip the object. Moving the fingers individually makes the hand look much more realistic in its interaction with objects. This approach has been explored with the Physics hand, which filters on finger positions to show when the hand is hovering over a grabbable object\footnote{A grabbable object is an object which has our grabbable component attached to it. The grabbable component will be described in further detail in section \ref{subsec:grabbingSystem} about our grabbing systems.} and is close enough to grab it as well. Furthermore, by bending the fingers towards the surface of the grabbable object when approaching it, the Physics hand allows the player to do things like petting or stroking across object surfaces in a way that looks more natural than with a completely open hand.
 
-\todo[inline]{Perhaps add an image showing the stroking of an object without finger filtering (with open hand) and with the Physics hand finger filtering?}
+\todo[inline]{Perhaps add an image showing the stroking of an object without finger filtering (with open hand) and with the Physics hand finger filtering? The Physics hand's fingers look a lot more natural and less robotic and stiff than without finger position filtering.}
 
-\missingfigure[figwidth=15cm]{Image sequence: Position and finger position filtering}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Sequences/FiltersPositionFingers/Seq_FiltersPositionFingers.png}
+\caption{Sequence showing hand filtering on both position and fingers.}
+\label{fig:filtersPositionFingers}
+\end{figure}
 
 The three hand prototypes that implement finger filtering (the Finger rigid hand, the Physics hand and the Rotation hand) do so in two different ways. The method used for the Finger rigid hand tries to find a suitable closed value for each finger. Each finger can then be animated using this value and its corresponding animation mask. Animation masks are used to isolate a part of the animation data, which makes it possible to use the same animation as for the other hands, while being able to animate each finger individually. The other two hand prototypes make use of an inverse kinematics system (or IK system). Inverse kinematics make use of the kinematics equations to calculate positions for a joint system where we have desired positions for the end effectors. This maps nicely to the movement of fingers, since a finger is a system of joints, where we know the root position of the finger and we'll set the desired location of the end effector, the tip of the finger. The IK system can then calculate how to bend each of the finger's joints to make the tip reach the desired position. To make sure the fingers bend naturally, restrictions can be set for how the joints can bend. The IK system will try to get the tip of the finger's as close to their desired locations without compromising the restrictions for the joints. The restrictions are set up in such a way that the joints can only bend around a single axis which means that they cannot bend sideways, for instance. The axis around which they bend is chosen such that bending the fingers closes the hand into a fist. All fingers bend around the same axis, except for the thumb, because of its placement on the hand. We have used a Unity asset pack called Final IK \parencite{RootMotion2017}, which implements several components and methods that can be used to setup and run IK calculations. To move the fingers using the IK system, we move the IK targets, which are the desired locations for the fingertips.
 
 Without going into too much detail about the implementation of the prototypes before Section \ref{sec:handPrototypes}, it's worth mentioning that finding the adjusted closed value for the fingers in the first method and the position for the IK targets in the second involves depenetration of either the hand as a whole or depenetration of individual fingers as well as raycasting to the surface of nearby objects to find locations to place the IK targets and more.
-
 
 \section{The hand prototypes}
 \label{sec:handPrototypes}
@@ -122,7 +124,7 @@ All the hands have three thing in common. First the hands require that colliders
 
 Another thing worth mentioning before continuing to the implementation details for each of the hand prototypes is what the target position and rotation of the hand is. The placement of the hand compared to the controller is a decision that impacts how the user will move the controller around to interact with objects and how the hand feels to use. We chose to place the hand compared to the controller in the virtual world in the same way the user's real hand is placed according to the controller in the real world. As shown in Figure \ref{fig:handControllerPlacement}, the right hand is placed to the right of the controller in a position that could grab and hold the controller. The left hand goes on the left side of the controller but is otherwise the same as the right hand. Our reasoning behind this choice was to map the hand as closely to the position of the user's hands in the real world. From now on, when the controller's position and orientation is mentioned, it's the position and orientation the hands display in this image that we're referring to.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{HandControllerPlacementBoth.png}
 \caption{Two images showing the placement of the hands compared to the controllers.}
