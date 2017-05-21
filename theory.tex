@@ -103,7 +103,7 @@ The well-known Rubber Hand Illusion, originally reported in \parencite{Botvinick
 
 \parencite{Kilteni2012}'s components of Sense of Embodiment seem to be found in the the Rubber Hand Illusion family of experiments and their similarity to the virtual hand - real hand separation produced by adjusted hand control models suggests that the results are transferable to our problem.
 
-\subsection{From Where Do We Sense?}
+\subsection{From Where Should We Sense?}
 \label{subsec:sensePerspective}
 
 In real life, our body determines the "perspective" of our senses, we sense from our body: what we see is restricted by the position of our eyes, we can only feel an object with our touch if we can reach it with our hands. In Virtual Reality one has the option to restrict our senses either with the real body or with the virtual body. 
@@ -114,19 +114,33 @@ The first behavior is the most coherent one and should benefit the Sense of Owne
 
 The second behavior would produce a break in Psi because seeing from inside of a solid should not match anyone's expectations about the worlds possibilities. It could also be argued that it would impact PI negatively, since from that situation we might be able to see our body from outside of it, which is not something our normal SCs would allow.
 
-We would remiss if we didn't mention that at least in regards to the sense of sight, the first behavior - separating the sight sense perspective from the real body - is generally considered a bad practice by the VR software development community \parencite{} \todo{Missing reference}.
+We would remiss if we didn't mention that at least in regards to the sense of sight, the first behavior might fall under what is generally considered a bad practice by the VR software development community. Specifically, it is discouraged to move the camera in any way that doesn't match the user's head movements because it is thought to produce discomfort in the user \parencite{UnityCamera, OculusCamera}. This would be an issue that would have to be considered in much greater detail if the focus of this work wasn't on the control of the hands.
 
-
-\todo[inline]{Relationship between SoE and PI}
+\todo[inline]{Relationship between SoE and PI. Disembodying user. Rewrite.}
 
 \section{Critiques of Movement Interaction}
 \label{sec:critiquesMovementInteraction}
 
-\todo[inline]{Address Norman's critique of movement based interaction \parencite{Gillies2016}
-Oculus Touch vs Data Gloves -> presence as involvement (allocation of attentional resources) from \parencite{Schuemie2001}
-}
+\parencite{Norman2010} rejects the claim that current gestural interfaces are Natural User Interfaces: "user interfaces where the interaction is direct and consistent with our ‘natural’ behaviour" \parencite{HvasMortensen2017}. Norman reminds us that the strength of a user interface is determined by how easy it is to remember the actions that are possible and how to invoke them. He points out that due to the ephemeral nature of gestures, when a gesture does not produce any response or produces an undesired one, the user lacks feedback that that they can use to learn to perform the gesture ‘correctly’.
 
-\section{State of the Art revisited}
+Gilles argued in \parencite{Gillies2014} that if movement interfaces are non-representational, that is, if they implement the Sensorimotor Contingencies that we know from the real world, Norman's arguments might not apply. In \parencite{Gillies2016} however, he acknowledges that when the SCs implemented in the interfaces are only similar to the real-world SCs, they start to become representational and Norman's arguments regain their weight. An example of this provided by Gilles in the context of VR is "walking in place" as a locomotion control method.
+
+In regards to unadjusted hand control models, since the mapping between the real movements of the user and the virtual movements is 1 to 1, these arguments need not be a concern, but this is less clear when it comes to adjusted hand control models because the virtual hands can separate from the user's real hands, which could be thought to make the control less intuitive. However, we would argue that because adjusted hand control models can still provide a sensorimotor feedback loop \parencite{Gillies2014} that matches our knowledge about how real bodies are restricted in their movement by physical objects around them, the issues that have been pointed out should not be a problem.
+
+In a broad sense, the tracked controllers that the users hold in their real hands and use to control the virtual hands are part of the interface. In Chapter \ref{chap:introduction} we covered the differences between the controllers of the HTC Vive, the Oculus and the PS VR and we noted that the Oculus Touch controllers were the ones that had the most input mechanisms that could be used to control virtual fingers with movements of the real fingers. However, the user has to perform reduced movements with their real fingers that correspond to full movements with the virtual fingers, in the case of the triggers, which have analogue input, a continuous mapping between the movement of the real fingers and the virtual fingers is possible, which allows the sensorimotor feedback loop mentioned by Gilles, but in the case of the capacitive sensors, the user doesn't have a way of feeling that their fingers are about the trigger a state change until the state has triggered. These problems would of course not exist with the use of data gloves like the Manus VR Gloves since the gloves can track the movement of the fingers completely.
+
+On the software side, both Facebook Spaces \parencite{facebookSpaces} and Oculus First Contact \parencite{firstContact}, which use and showcase the possibilities of Oculus Touch controllers, use representational movement interaction. Buttons, both when they are diegetic and when they are part of a GUI, can only be pressed with the the index finger, and only when it is extended. The virtual hands only collide with virtual physical objects in certain poses, like with a closed fist. Because the movement control these games is more representational, it requires more attention from the user and it simple hand gestures can become rather complicated when thought of in terms of combinations of input. The problem is that we want to minimize the amount of attentional resources that the user needs to focus on the controllers because they are part of the real world and not of the virtual reality, which is where we want the users to have their attention (Witmer and Singer relate presence to attention allocation and defined presence as partly determined by involvement \parencite{Schuemie2001}).
+
+\section{PI, Psi and SoE in Current VR Games}
 \label{sec:soaRevisited}
+
+Armed with a theoretical framework, we can revisit the games discussed in Chapter \ref{chap:introduction} and evaluate them in terms of PI, Psi and SoE. The reader should bear in mind that these are subjective experiences and that what we present here are evaluations based on our own individual impressions. In order to obtain more reliable assessments, one should conduct tests with larger groups of subjects and use perhaps some of the existing questionnaires and tests that measure physiological and behavioral responses.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Sequences/WilsonsHeart/wilsonOutOfBodyExperience.png}
+\caption{Sequence showing an "out of body experience" in Wilson's Heart: the sense perspective is not restricted by the virtual body.}
+\label{fig:wilsonPenetration}
+\end{figure}
 
 \todo[inline]{Revisit Job Simulator, Wilson's Heart and Lone Echo using theory. Fidelity coherence and expectations \parencite{Nowak2003, Argelaguet2016} Presence correlated with predictibility and explorability\parencite{Schubert1999}}
