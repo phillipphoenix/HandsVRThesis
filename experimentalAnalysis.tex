@@ -419,6 +419,8 @@ The Parenting grabbable does what the name indicates. It makes the hand the pare
 
 \textbf{\textit{(WRITE ABOUT THE FIXED JOINT GRABBABLE HERE!)}}
 
+\todo[inline]{The Fixed Joint grabbable has the problem that after moving and stopping, the velocities are still present on the grabbed object, making it wobble a bit.}
+
 As for the Velocities grabbable, they are moved along with the hand in the same way the Physics hand is moved. When grabbed, the current position relative to the hand is saved as the target position and when the hand moves, so does the target. Then every frame the velocity and angular velocity needed to reach the target position and rotation is calculated and applied to the object. The gravity doesn't need to be disabled for the grabbable's rigidbody, since we overwrite the velocities each frame. This type of grabbable plays much better with other objects, when it's pushed into them. For the same reasons that the Physics hand works well with other objects, so does the grabbed object, while being held. But being able to be pushed around by the physics system also means that the grabbed object can be forced away from its target position, when forced against other objects, which can lead to situations, where the hand is suddenly not facing the grabbed object from the same direction as before or the hand is in an unrealistic position to be able to hold the object. We find that these deficits are often more acceptable than the problems occurring with the other grabbable types, though.
 
 
