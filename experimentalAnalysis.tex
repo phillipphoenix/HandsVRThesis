@@ -425,6 +425,16 @@ The Velocities grabbable is moved along with the hand in the same way the Physic
 
 As a final note about the grabbing of objects, it's worth noting that the Physics hand also allows for lifting objects without grabbing them using the trigger in a stable manner. As mentioned above, lifting has benefits like giving a sense of weight to objects and disallowing objects that are too heavy to be carried. Even if an object is too heavy to carry, it might still be light enough for it to be pushed or rolled. This gives a completely different feel to the act of carrying objects than grabbing with the trigger, although using the trigger method gives a very high amount of control over the grabbed object, as lifting requires the player to look at the object to be able to see how their hands are interacting with the object, while grabbing it with the trigger locks the object to the hand and the player doesn't need to think about dropping it except for when the grabbed object hits another object hard enough and it's dropped.
 
+\section{The baseline: Our Job Simulation Hand}
+To be able to evaluate our prototypes, we decided to implement a version of the hands as they feel in the game Job Simulator, mentioned previously. The main focus points of the Job Simulator hand and the examples that we've already mentioned above are the fact that they aren't constrained by immovable objects in the virtual world and will freely penetrate objects and when they are used to grab objects the hand that does the grabbing is hidden. We've implemented a hand which we've tried to get as close to the hands from Job Simulator as possible and in this section we'll go into details about the implementation of this hand in the same way as we've described the prototypes above.
+
+\textbf{\textit{NOTES:}}
+\begin{itemize}[noitemsep]
+\item Movement: Rigidbody.MovePosition + Rigidbody.MoveRotation.
+\item Fingers: If object within grab area, lerp to hover closed value, else lerp to trigger closed value.
+\item Hide when grabbing.
+\end{itemize}
+
 \section{Chapter conclusion}
 \label{sec:CHAPTERCONCLUSION}
 In this chapter we've delved into the categorization of approaches, which describes what position filtering, rotation filtering and filter position filtering is, how they can be implemented on a high level and how they've been used in our prototypes. Our use of these filters has had the goal of making the hands behave in a more realistic way than the what is seen in games like Job Simulator. We've used position filtering as the main driving force behind stopping penetration of objects and we've used rotation and finger position filtering as a means to let the hand get closer to the target controller, while adhering to the restriction of not penetrating objects. Furthermore, the finger filtering has also been used as a diegetic way of displaying to the player which objects are grabbable and which aren't.
