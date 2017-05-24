@@ -426,14 +426,28 @@ The Velocities grabbable is moved along with the hand in the same way the Physic
 As a final note about the grabbing of objects, it's worth noting that the Physics hand also allows for lifting objects without grabbing them using the trigger in a stable manner. As mentioned above, lifting has benefits like giving a sense of weight to objects and disallowing objects that are too heavy to be carried. Even if an object is too heavy to carry, it might still be light enough for it to be pushed or rolled. This gives a completely different feel to the act of carrying objects than grabbing with the trigger, although using the trigger method gives a very high amount of control over the grabbed object, as lifting requires the player to look at the object to be able to see how their hands are interacting with the object, while grabbing it with the trigger locks the object to the hand and the player doesn't need to think about dropping it except for when the grabbed object hits another object hard enough and it's dropped.
 
 \section{The baseline: Our Job Simulation Hand}
-To be able to evaluate our prototypes, we decided to implement a version of the hands as they feel in the game Job Simulator, mentioned previously. The main focus points of the Job Simulator hand and the examples that we've already mentioned above are the fact that they aren't constrained by immovable objects in the virtual world and will freely penetrate objects and when they are used to grab objects the hand that does the grabbing is hidden. We've implemented a hand which we've tried to get as close to the hands from Job Simulator as possible and in this section we'll go into details about the implementation of this hand in the same way as we've described the prototypes above.
+To be able to evaluate our prototypes, we decided to implement a version of the hands as they feel in the game Job Simulator, mentioned previously. The main focus points of the Job Simulator hand and the examples that we've already mentioned above are the fact that it isn't constrained by immovable objects in the virtual world and will freely penetrate objects and when it is used to grab objects the hand becomes hidden. We've implemented a hand which we've tried to get as close to the hands from Job Simulator as possible and in this section we'll go into details about the implementation of this hand in the same way as we've described the prototypes above.
 
-\textbf{\textit{NOTES:}}
-\begin{itemize}[noitemsep]
-\item Movement: Rigidbody.MovePosition + Rigidbody.MoveRotation.
-\item Fingers: If object within grab area, lerp to hover closed value, else lerp to trigger closed value.
-\item Hide when grabbing.
-\end{itemize}
+In our implementation of the Job Simulator hand, it is set up using a kinematic rigidbody, which has its flaws and benefits as described above. The hand is moved by using Unity's $Rigidbody.MovePosition$ and $Rigidbody.MoveRotation$, which we also used before for some of the prototypes. It has no position filtering to stop it from penetrating objects, so it will always keep the position and orientation of the controller it's following. As in Job Simulator, our implementation also indicates, when the hand is near objects that can be grabbed, by bending all the fingers slightly. As with the Physics hand, we detect, when there is a grabbable inside its grab area upon which we bend the fingers. Unlike the Physics hand, though, we just use a set hover closed value as the closed value of the hand, when hovering over a grabbable. So when the grab area is empty, we use the player's input for the closed value of the hand and set the animation to blend accordingly. When there is a grabbable object in the grab area, we overwrite the input with the defined hover closed value. When the new closed value has been defined, we lerp towards it to smoothen out the motion of the fingers. One thing that none of our prototypes do, but the implementation of the Job Simulator hand does is to hide itself, when grabbing objects. When an object has been grabbed by closing the hand while hovering over a grabbable, we disable all renderers\footnote{In Unity a renderer is a component, which renders a mesh, making it visible in the world.} for the hand, effectively making it invisible. When the object is released or dropped the renderers are enabled again.
+
+\begin{figure}[H]
+\centering
+\small
+Position and rotation:
+\begin{enumerate}[noitemsep]
+\item Move the hand's rigidbody to the target controller using $MovePosition$.
+\item Orient the hand's rigidbody compared to the target controller using $MoveRotation$.
+\end{enumerate}
+Fingers:
+\begin{enumerate}[noitemsep]
+\item Check if there is a grabbable object in the grab area of the hand below the palm.
+\item If there is, set the new target closed value to a defined hover closed value.
+\item If there is not, set the new target closed value to the trigger input value.
+\item Lerp towards the new target closed value and update the hand animation accordingly.
+\end{enumerate}
+\caption{Step-by-step process for placing the Job Simulator hand and its fingers.}
+\label{fig:stepByStepJobSimHand}
+\end{figure}
 
 \section{Chapter conclusion}
 \label{sec:CHAPTERCONCLUSION}
