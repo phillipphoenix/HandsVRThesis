@@ -1,9 +1,46 @@
 \section{Experiment Setup}
 \label{sec:experimentSetup}
+After developing the prototypes described above, we implemented a version of the Job Simulator hands which we used as a baseline for comparison during our user evaluation. For the evaluation we decided to compare only one of the prototypes with the Job Simulator hand, which was the Physics hand.
 
-Procedure here
+The evaluations ran in a structured manner one person at a time. Each person would first play through what we call the Dev World environment first with the Job Simulator hand to establish the baseline and then with the Physics hand, after which they would do the same with a more game-like environment, which we call Touchy Island. The Dev World is a small-scale environment with a few basic objects of basic shapes that the users can interact with in different ways. Touchy Island was more like an experience, where the player could interact with different creatures on a floating island. The details of both these environments are noted below in Sections \ref{subsec:devWorld} and \ref{subsec:touchyIsland}. While experiencing the two hands in the Dev World, the users were prompted to follow a list of instructions which would guide them through the different interactions possible with the hands to make sure they noticed their features. Besides the features of the hands, the instructions also mentioned the controls, like using the trigger to close the hand. In order for the players to be able to move around the environments, which were larger than the play space of the Vive, we'd implemented teleportation, which could be activated using the track pad on the controller.
 
-Include questionnaire in annex
+\begin{figure}
+\begin{itemize}[noitemsep]
+\item Press the triggers to close the hands.
+\item Touch immovable object.
+\item Move controller deep into immovable object.
+\item Hover over a grabbable object.
+\item Grab a grabbable object.
+\item Move around the grabbed object.
+\item Hit an object with a grabbed object.
+\item Throw a grabbed object.
+\item Push a grabbable object.
+\item Break the joint set up between two of the grabbables by grabbing one of the objects with each hand and pulling in opposite directions.
+\item Lift a grabbable object without grabbing it with the triggers.
+\item Teleport using the track pad on the controller.
+\end{itemize}
+\caption{List of actions the testers were guided through, while in the Dev World environment.}
+\label{fig:listActionsDevWorld}
+\end{figure}
+
+When the testers had gone through the instructions in the Dev World for both hands, we continued to Touchy Island. In Touchy Island we would not guide them with specific instructions, but allow them to freely move around and experience the interactions possible. Sometimes we would hint at certain interactions or features of Touchy Island, if the testers hadn't discovered them within a certain timeframe, but the second environment was meant for playing with the hands, while being reminded by the possibilities presented in the first environment. In Touchy Island the testers would also first evaluate our implementation of the Job Simulator hand before moving to the Physics hand, which each took 5 to 10 minutes. During the evaluations we would record both the screen and through the webcam of the computer running the tests the testers themselves, where permission was given. This material was saved to be able to look back, if any issues should come up later during the analysis of the evaluations.
+
+After the evaluations were over, we asked the testers to fill in a questionnaire, where most questions were set up like an A/B test. They would select which of the hands felt better in certain contexts or situations. An example from the questionnaire would be: “With which version did you prefer pushing things?”. The full questionnaire can be found in the Appendix (REF). During the evaluation, the Job Simulator hand was named Standard hand and the Physics hand was named Adaptive hand. This was to remove associations induced by the names. At the end of the questionnaire we had two questions, which were about selecting from a list of words, which ones they thought fit best with first the Standard hand and then with the Adaptive hand. The reasoning behind these questions were to start making the testers think about the hands using different descriptors, which we hoped would be able to lead them into the short interview and discussion we would perform afterwards with more ease.
+
+The questionnaire was meant to make the testers start thinking about the hands and how they compared in different contexts, which would lead into an interview and discussion about the hands. When the questionnaire had been filled, we would discuss both hands and dig into why the tester preferred one hand over the other in certain contexts. The questions were guided by the answers we'd received through the questionnaire to dig deeper into the why of these preferences.
+
+\begin{table}[h]
+\centering
+\caption{Test procedure for the user evaluations.}
+\label{tab:testProcedure}
+\begin{tabular}{lL{2cm}L{5cm}L{5cm}}
+Phase & Duration & Tester & Organizer \\ \midrule \midrule
+Introduction & 5 mins & & Introduce tester to test scenario and purpose. \\ \midrule
+Play test & 5 mins + 5-10 mins & Test Standard hand and Adaptive hand in Dev World and Touchy Island environments. & Observe tester, guide through actions in the Dev World. \\ \midrule
+Questionnaire & 3 mins &Tester fills out questionnaire & \\ \midrule
+Verbal feedback & 20 mins & Answer questions about test session and discuss hands. & Ask questions about and discuss the hands. \\
+\end{tabular}
+\end{table}
 
 \subsection{Dev World}
 \label{subsec:devWorld}
