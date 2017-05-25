@@ -44,6 +44,13 @@ Verbal feedback & 20 mins & Answer questions about test session and discuss hand
 
 \subsection{Dev World}
 \label{subsec:devWorld}
+The Dev World was created and expanded upon, while the prototypes were developed. It was originally set up to allow us to test our prototypes as they were implemented. It originally consisted of only a floor, a large immovable cube and some small cubes on top that could be pushed around. The immovable cube was used mainly to test how the position filtering worked for the different hands allowing us to test on both large flat surfaces, but also around edges and corners, which often introduce difficulties. The smaller cubes could be pushed and later, when grabbing was introduced they could also be grabbed and thrown. These features helped test how the fingers' placement looked, both before and while grabbing the objects. A punching bag was added, which was a capsule fastened by one end to its original position in the world using a joint. The punching bag can be pushed, bending around the joint position and snapping back. When users discovered the punching bag, they often started boxing for a short while without being told.
+
+Later in the process we added a few extra things to test newer functionality implemented in the prototypes and grabbing systems. We added a long thin cylinder, which was used to test finger positioning on smaller objects and it was also used to test behavior around hitting objects with a grabbed object instead of with the hand directly. A set of cubes were also added, where they were connected with a joint having break forces enabled allowing the joint to break, when forces above a certain threshold is observed. If the cubes are grabbed, one in each hand, and they are being pulled apart, the joint might break. This was mainly created as a plaything that the users could interact with. The last thing added to the Dev World was a large cube, which wasn't immovable, but had a very high mass. This cube was added to be able to test the effect of pushing heavy objects with the hands, especially the Physics hand. All our prototypes, with the exception of the Physics hand, pushed objects of all weights equally, whereas the Physics hand made the users' able to get a sense of weight.
+
+In the Dev World, all immovable objects are dark gray of color and all objects that could be pushed or grabbed or otherwise interacted with are brightly colored to show the users which were which.
+
+(INSERT IMAGE OF THE DEV WORLD)
 
 \subsection{Touchy Island}
 \label{subsec:touchyIsland}
