@@ -112,12 +112,14 @@ This section will go into depth about how each of the five hand prototypes have 
 \centering
 \caption{The hand prototypes and their filters.}
 \label{tab:handPrototypes}
+\makebox[\textwidth][c]{
 \begin{tabular}{C{2.8cm}|C{2cm}C{2cm}C{2cm}C{2cm}C{2cm}}
  & Rigid hand & Sliding rigid hand & Finger rigid hand & Physics hand & Rotation hand \\ \midrule
 Position filter & \Large X & \Large X & \Large X & \Large X & \Large X\\ \midrule
 Rotation filter & & & & \Large X & \Large X \\ \midrule
 Finger position filter & & & \Large X & \Large X & \Large X 
 \end{tabular}
+}
 \end{table}
 
 The hands all have a couple of things in common. First the hands require that colliders are set up for their models. We use one box collider for the palm of the hand and one for each part of the fingers, except for the Rotation hand, which only has colliders on the fingertips and the palm. It's important to make sure that the colliders are not able to collide and interact with each other. In Unity we made all game objects in the hand reside on the same layer (but not the default layer) and made the physics system ignore interactions between objects within that layer. If this is not done, the hand might collide with itself and disallow fingers from bending etc. For the physics hands this is taken one step further where each hand, left and right, has their own layer. The second thing we've used for all hands is Unity's rigidbody component. This component lets the hands interact with the world through the physics system. In Unity a rigidbody component can be kinematic or non-kinematic. A kinematic rigidbody is not affected by outside sources which means it's not affected collisions by, for instance. A non-kinematic rigidbody is affected by outside sources and will be affected by, for instance, gravity and collisions. All of our hands use kinematic rigidbodies with the exception of the physics hands. The last thing the hands all need is an animation to close the hand. Our animations consist of two frames; one where the hand is fully open and one where the hand is closed. We can blend between the two frames using the trigger value from the controller, which therefore controls how closed the hand is. Some of the hands have different considerations whether the hand is open or closed. For all hands we consider the hand closed, when the trigger value - which can be between 0 (not pressed) and 1 (fully pressed) - is equal to or greater than 0.5.
