@@ -133,7 +133,12 @@ Another thing worth mentioning before continuing to the implementation details f
 \label{fig:handControllerPlacement}
 \end{figure}
 
-\todo[inline]{Perhaps add a diagram over the hand and its setup, like which parts it consists of, where the origin of the hand is and such.}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\textwidth]{HandDiagram.png}
+\caption{Diagram showing the setup of the hand.}
+\label{fig:handDiagram}
+\end{figure}
 
 \subsection{The Rigid Hand}
 \label{subsec:rigidHand}
@@ -398,7 +403,7 @@ While the rotation filtering works as expected in most cases, the fingers have s
 \label{sec:handVisualization}
 When the hand is separated from the controller as happens with our prototypes when the controller is moved inside an object, it can be hard to understand exactly where one's real hand is positioned in the virtual world. Not knowing what the actual input to the hand is can lead the players to not understand why the hand is positioned as it is in the virtual world. To visualise the actual input to make it clearer to players what's happening, we've implemented a wireframe version of the hands, which is displayed at the position of the controller when the controller is separated more than a defined distance from the hand. The wireframe hand is placed such that it mimics where the virtual hand would have been placed, if it hadn't been obstructed, in essence showing where the players real hand is in the virtual world. As to not obstruct the players view too much by showing the wireframe hand immediately upon separation the distance is to fade in the wireframe, while the distance grows. This is implemented using one of Unity's animation curves as explained above, which fades the hand in by transitioning the alpha value from 0 towards 1\footnote{The alpha value indicates how transparent or opaque an object or image is. 0 means that it's completely transparent and 1 indicates that it's completely opaque.}. The result is that after the hand is separated from the controller by a certain distance the wireframe hand starts fading in and becomes more opaque when the distance increases further.
 
-(INSERT IMAGE SEQUENCE SHOWING THE WIREFRAME HAND HERE)
+\textbf{\textit{(INSERT IMAGE SEQUENCE SHOWING THE WIREFRAME HAND HERE)}}
 
 \section{Haptic Feedback}
 \label{sec:hapticFeedback}
