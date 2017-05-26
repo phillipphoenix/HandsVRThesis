@@ -50,7 +50,12 @@ Later in the process we added a few extra things to test newer functionality imp
 
 In the Dev World, all immovable objects are dark gray of color and all objects that can be pushed, grabbed or otherwise interacted with are brightly colored to show the users which are which.
 
-(INSERT IMAGE OF THE DEV WORLD)
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Environments/devWorld.png}
+\caption{An image of the Dev World.}
+\label{fig:devWorld}
+\end{figure}
 
 \subsection{Touchy Island}
 \label{subsec:touchyIsland}
@@ -58,24 +63,49 @@ The second environment, Touchy Island, was created for different reasons and wit
 
 The Rock creatures start out as small and almost cube shaped. Their shape allows them to be stacked on top of each other, if that's what the player would like to do. The player can then try to move around stacks of Rock creatures while playing a balancing game of sorts. The Rock creatures move around by rolling onto one of the sides it's not currently standing on, like a dice rolling. This also means that they sometimes lie on their sides, their backs or even their faces. The Rock creatures are the only ones that age and grow. Over time the Rock creatures will grow old. When this happens, they will be enveloped in a cloud of smoke and they will emerge larger and with crystal hair and a mustache. Rock creatures are also the only creatures that die of old age.
 
-\textbf{\textit{(IMAGE ROCK CREATURES)}}
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Environments/rockCreatures.png}
+\caption{An image of the Rock creatures.}
+\label{fig:rockCreatures}
+\end{figure}
 
 The Cherry creatures are organic by nature. They start their lives growing from the cherry trees. When they are mature, which is when they've grown to the size of a big coconut, they drop to the ground and start exploring their environment. They move by jumping around, which also makes them hard to catch, when they are not resting for a while. The size of the Cherry creatures makes them fit comfortably in the player's hands compared to the other creatures which are of larger nature.
 
-\textbf{\textit{(IMAGE CHERRY CREATURES)}}
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Environments/cherryCreatures.png}
+\caption{An image of the Cherry creatures.}
+\label{fig:cherryCreatures}
+\end{figure}
 
 The Mole creatures are capsule shaped creatures, who stick their heads out of their holes to have a look around. When touched or hit, they bounce up and down in a spring-like fashion, usually drawing players to hit them even more. When hit hard they even jump out of their holes completely. If grouped together, they could be compared to a game of whack-a-mole.  They only move in a straight line up and down, but can also spin around. They don't like being picked up though, so grabbing a Mole creature isn't an option. They would rather want to stay in their holes, although they do keep their heads poking out, while the player is still around on Touchy Island, to keep a watchful eye.
 
-\textbf{\textit{(IMAGE OF MOLE CREATURES)}}
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Environments/moleCreatures.png}
+\caption{An image of the Mole creatures.}
+\label{fig:moleCreatures}
+\end{figure}
 
 The Cloud creatures float around and are usually very happy. They can be pushed around if done lightly, but will always try to find a comfortable hovering height over the ground. The Cloud creatures are extremely delicate and can't handle hard hits or grabs. If the player chooses to grab or hit a cloud creature they are killed in a poof of smoke. So in order for the player to interact with the cloud creature they need to employ a light touch.
 
-\textbf{\textit{(IMAGE OF CLOUD CREATURES)}}
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Environments/cloudCreatures.png}
+\caption{An image of the Cloud creatures.}
+\label{fig:cloudCreatures}
+\end{figure}
 
 The creatures all have moods which are affected by their surroundings. Creatures can be in one of four different moods: Neutral, Happy, Sad and Angry. Each of these moods are represented in a creature by a value, which most of the time is between 0 and 100. A creature's current mood is always decided by whichever of the Happy, Sad and Angry values are the highest, except if none of them have a value above 50 in which case their mood is Neutral. Some creature's moods are affected over time, slowly increasing or decreasing. These values can be defined for each individual creature, although we chose values that in general were close to each other with slight modifications for the different creature types. The main factor which can change a creature's mood is the player's actions. If a player is gentle and strokes or pets a creature they will become increasingly happy, up till a point where they might even start singing spreading their joy to other nearby creatures. On the other hand, if the player is throwing or hitting a creature it will become sadder and angrier and surrounding creatures will become sad. The easiest way to make creatures sad is to throw one of their friends over the edge of the island or to poof a cloud by hitting or grabbing it, resulting in their death. A creature's current mood is displayed by their facial expression. Creatures all have a face, which can look neutral, happy, sad or angry. Along with that, they also have temporary facial expressions which display the effect of an action. When petted for a while a creature's eyes will turn into hearts, for instance. This way the creatures give the player feedback on the effect of their actions.
 
 As mentioned above there are also two interactive objects besides the creatures. They both exist to allow the player to experience different interactions. The interactive objects are bamboos and movable rocks. On the island there is a small bamboo forest. If the player so desires, they can break off the bamboo from its root and use it as a stick to throw, push or hit things with. The bamboos are connected to their roots using joints which have a certain break force. This allows the player to be able to grab the bamboo and then pull it off its root, but they can also be hit to break them. The movable rocks are essentially just rocks that are spread around the island but aren't stuck in the ground. We disabled the grabbing feature from the rocks and made them rather heavy so that players could experience the different feel of weight when pushing and lifting the rocks with the different hands. Finally, the island also has static objects like small crystals, immovable rocks, the cherry trees and some plateaus. When the player interacts with these they'll really see the position filtering in action for the Physics hand along with the real hand visualization and notice the fact that our implementation of the Job Simulator hand moves straight through such objects. 
 
-\textbf{\textit{(IMAGES OF TOUCHY ISLAND)}}
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Environments/touchyIsland.png}
+\caption{An image of Touchy Island.}
+\label{fig:touchyIsland}
+\end{figure}
 
 All these different creatures and objects all have their distinct purpose in the world because of their unique features. These are not only implemented to have diversity, but also to draw in the player and make them want to interact with the environment. The reason for the creatures to have moods that are affected by the player's actions is to make the players want to interact and thereby use the hands. This also leads back into the decision to make a more game-like experience than another stale test environment. By first having testers go through the guided tour that is the Dev World evaluation and learn the features of the hand, releasing them into this playful sandbox would be a different experience which was more in-context of where the hands might be used in a real game. By having two evaluations, one in each of these different environments, we hoped that players would get an increased understanding of the hands and their use as well as more impressions of their functionality. 
