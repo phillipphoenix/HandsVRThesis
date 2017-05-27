@@ -20,6 +20,8 @@
 \usepackage{enumerate}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
 %\usepackage{natbib}
 %\bibliographystyle{abbrvnat}
 %\setcitestyle{authoryear,open={(},close={)}}
@@ -115,14 +117,13 @@
 % Set base path for images.
 \graphicspath{ {Images/} }
 
+% Set sans serif font family.
+\renewcommand{\familydefault}{\sfdefault}
 
 \begin{document}
 
 % Start without page numbers (by gobbleling them up).
 \pagenumbering{gobble}
-
-% Set sans serif font family.
-\sffamily
 
 % Include the ITU frontpage!
 %\includepdf{ITUfrontpage.pdf}
