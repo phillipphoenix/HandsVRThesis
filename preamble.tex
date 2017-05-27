@@ -5,7 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{graphicx}
-\usepackage{appendix}
+\usepackage[toc, page]{appendix}
 %\usepackage[left=3.5cm,right=3.5cm,top=3.3cm,bottom=3.3cm,heightrounded]{geometry} %MS Word kind of margins
 \usepackage{geometry}
 \usepackage{amsmath}
@@ -199,5 +199,26 @@ Here is the abstract of the thesis paper.
 \newpage
 
 \printbibliography[title=References]
+
+\restoregeometry
+\newpage
+
+% Appendices without page numbers (by gobbleling them up).
+\pagenumbering{gobble}
+
+\begin{appendices}
+
+% pdfpages package documentation (includepdf): http://mirrors.dotsrc.org/ctan/macros/latex/contrib/pdfpages/pdfpages.pdf
+
+\chapter{Touchy Island Design Document}
+\includepdf[pages=1-5]{Includes/TouchyIslandDesignDocument.pdf}
+
+\chapter{User Evaluation Questionnaire}
+\includepdf[pages=-]{Includes/Questionnaire.pdf}
+
+\chapter{User Evaluation Interview Notes}
+\includepdf[pages=-]{Includes/InterviewNotes.pdf}
+
+\end{appendices}
 
 \end{document}
