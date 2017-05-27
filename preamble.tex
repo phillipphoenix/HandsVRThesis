@@ -198,7 +198,13 @@ Here is the abstract of the thesis paper.
 \restoregeometry
 \newpage
 
-\printbibliography[title=References]
+%\printbibliography[title=References]
+
+\printbibheading[title=References]
+\printbibliography[heading=subbibliography, title={Bibliography}, keyword={Bibliography}]
+\printbibliography[heading=subbibliography, title={Ludography}, keyword={Ludography}]
+\printbibliography[heading=subbibliography, title={Attributions}, keyword={Attributions}]
+\printbibliography[heading=subbibliography, title={Other References}, keyword={References}]
 
 \restoregeometry
 \newpage
@@ -210,13 +216,48 @@ Here is the abstract of the thesis paper.
 
 % pdfpages package documentation (includepdf): http://mirrors.dotsrc.org/ctan/macros/latex/contrib/pdfpages/pdfpages.pdf
 
+% These huge code groups are needed to center align the chapter title vertically.
+
+\begingroup%
+\makeatletter%
+\cleardoublepage%
+\let\newpage\relax%
+\let\clearpage\relax%
+\vspace*{\fill}%
+\vspace*{\dimexpr-50\p@-\baselineskip}% Remove the initial
+%% -default- 50pt gap (plus 1 line) 
 \chapter{Touchy Island Design Document}
+\label{apx:touchyIslandDesignDocument}
+\vspace*{\fill}%
+\endgroup%
 \includepdf[pages=1-5]{Includes/TouchyIslandDesignDocument.pdf}
 
+\begingroup%
+\makeatletter%
+\cleardoublepage%
+\let\newpage\relax%
+\let\clearpage\relax%
+\vspace*{\fill}%
+\vspace*{\dimexpr-50\p@-\baselineskip}% Remove the initial
+%% -default- 50pt gap (plus 1 line) 
 \chapter{User Evaluation Questionnaire}
+\label{apx:questionnaire}
+\vspace*{\fill}%
+\endgroup%
 \includepdf[pages=-]{Includes/Questionnaire.pdf}
 
+\begingroup%
+\makeatletter%
+\cleardoublepage%
+\let\newpage\relax%
+\let\clearpage\relax%
+\vspace*{\fill}%
+\vspace*{\dimexpr-50\p@-\baselineskip}% Remove the initial
+%% -default- 50pt gap (plus 1 line) 
 \chapter{User Evaluation Interview Notes}
+\label{apx:interviewNotes}
+\vspace*{\fill}%
+\endgroup%
 \includepdf[pages=-]{Includes/InterviewNotes.pdf}
 
 \end{appendices}
