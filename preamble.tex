@@ -121,6 +121,9 @@
 % Set sans serif font family.
 \renewcommand{\familydefault}{\sfdefault}
 
+% Create empty page command, which inserts an empty page.
+\newcommand*\emptypage{\newpage\null\thispagestyle{empty}\newpage}
+
 \begin{document}
 
 % Start without page numbers (by gobbleling them up).
@@ -129,10 +132,14 @@
 % Include the ITU frontpage!
 \includepdf{ITUfrontpage.pdf}
 
+\emptypage
+
 \listoftodos
 
 % TITLEPAGE
 \input{titlepage.tex}
+
+\emptypage
 
 % ABSTRACT
 \begin{abstract}
@@ -147,15 +154,21 @@ We introduce three filtering variables: The position, the rotation and the finge
 
 \end{abstract}
 
+\emptypage
+
 % TABLE OF CONTENTS
 \tableofcontents
 \newpage
+
+\emptypage
 
 %MAIN CONTENT
 \newgeometry{top=3.9cm}
 
 \input{preface.tex}
 \label{chap:preface}
+
+\emptypage
 
 \restoregeometry
 \newpage
