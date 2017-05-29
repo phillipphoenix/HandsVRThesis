@@ -124,6 +124,9 @@
 % Create empty page command, which inserts an empty page.
 \newcommand*\emptypage{\newpage\null\thispagestyle{empty}\newpage}
 
+% Increase the length footnotes can have on one page, so it doesn't spill over to the next.
+\interfootnotelinepenalty=10000
+
 \begin{document}
 
 % Start without page numbers (by gobbleling them up).
