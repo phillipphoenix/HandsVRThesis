@@ -143,15 +143,7 @@
 
 % ABSTRACT
 \begin{abstract}
-
-\begin{itemize}[noitemsep]
-\item Investigated if user experience can be improved by simulating a more realistic behavior, by deviating the hands' positions, rotations and overall pose from the user input.
-We introduce three filtering variables: The position, the rotation and the finger positions.
-\item Developed five prototypes of hands with different behaviors.
-\item Evaluated our best prototype with a baseline mimicking the hands from Job Simulator with a group of testers.
-\item Concluded that it's possible to improve the user experience, if certain problems with our prototypes are improved upon.
-\end{itemize}
-
+This paper presents our work with hands in virtual reality (VR) and especially our investigation of the possibility to increase the user experience of hands in VR. When interacting with the virtual world the physical constraints of the that world aren't applied to the user's real hands. We refer to this problem as the virtual world constraints problem. Our work focuses on one of the options to approach this problem, which is the separation of the virtual hands from the real hands, when there is a conflict to respect the virtual environment's constraints, which we also call the adjusted hand control model. The unadjusted hand control model is defined as the approach where the hands always follow the user input precisely. We explored the space of adjusted hand control models through a set of prototypes implemented in Unity and tested with the HTC Vive hardware. These prototypes all modify or ignore certain aspects of the user input: position tracking, orientation tracking and the input from the trigger button. We call these inputs filter variables and the action of modifying an input to filter the input. By filtering one or more of the three inputs in different ways, the prototypes explore different behavior for interacting with the virtual world. Finally, we evaluated one of our prototypes against an implementation of the hands from Job Simulator, a critically acclaimed VR game, which led us to believe that using adjusted hand control models can increase the user experience, but that our prototypes only showed promise towards that goal.
 \end{abstract}
 
 \emptypage
