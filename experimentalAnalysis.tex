@@ -149,7 +149,10 @@ As mentioned above in section \ref{subsec:categoryPositionFiltering}, the Rigid 
 
 \begin{figure}[H]
 \centering
-\small
+\footnotesize
+\begin{flushleft}
+Position and rotation:
+\end{flushleft}
 \begin{enumerate}[noitemsep]
 \item Move the hand's rigidbody to the target controller.
 \item Orient the hand's rigidbody compared to the target controller.
@@ -178,7 +181,8 @@ As with the outside state, the first thing that happens in the touching state is
 There are two transitions from the touching state back to the outside state. The first transition checks if the controller has moved back outside the object compared to the surface the hand is currently touching. The direction from the hand's current position to that of the controller is computed. If this direction is in the same general direction as the normal of the surface\footnote{To determine if the direction vector points in the same general direction as the normal, we use the dot product of the two. If the dot product is positive they are pointing in the same general direction.}, it means that the controller was moved back outside the object in the direction from where it entered. In this case the hand goes to the outside state. The other transition checks if we can sweep with the hand to the controller. If we can sweep all the way without hitting any objects it means that the hand has slid over an edge and the controller is currently free of any objects. Due to how Unity's $Rigidbody.SweepTest$ method is implemented, it's necessary to move the hand slightly away from the object's surface when sweeping. This is due to the fact that when the object is touched, sweeping doesn't recognize the object being hit. We therefore move the hand slightly back in the direction of the normal of the contact point, before sweeping, but reset the position again when the sweep has been performed. In the case where we hit something, the hand is still touching a surface and we stay in the touching state otherwise the hand transitions into the outside state.
 
 \begin{figure}[H]
-\small
+\footnotesize
+Position and rotation:
 \begin{enumerate}
 \item Transition to new state if necessary.
 \begin{enumerate}[noitemsep,label=\alph*.]
@@ -196,7 +200,7 @@ There are two transitions from the touching state back to the outside state. The
 \end{enumerate}
 % first column
 \begin{minipage}[t]{0.49\textwidth}
-\small
+\footnotesize
 The outside state:
 \begin{enumerate}[noitemsep]
 \item Orient the hand's rigidbody compared to the target controller.
@@ -210,7 +214,7 @@ The outside state:
 \hspace{2em}% <---- Don't forget this %
 %second column
 \begin{minipage}[t]{0.49\textwidth}
-\small
+\footnotesize
 The touching state:
 \begin{enumerate}[noitemsep]
 \item Orient the hand's rigidbody compared to the target controller.
@@ -224,8 +228,6 @@ The touching state:
 \caption{Step-by-step process for placing the Sliding Rigid Hand.}
 \label{fig:stepByStepSlidingRigidHand}
 \end{figure}
-
-\todo[inline]{Maybe split the sliding rigid hand step-by-step figure into two figures, so it can be split over two pages.}
 
 What the Sliding Rigid Hand tries to solve is to remove the jumping created by using only depenetration. This flaw is very evident with the Rigid Hand while the controller moves around inside objects. Since depenetration always moves the hand to the closest point on the surface of the object it's depenetrating from, the main idea of the Sliding Rigid Hand is to never allow the hand to penetrate deeply enough to select another surface than the one it entered from. Because the rotation of the hand never penetrates objects very far and and sweep and place never penetrates at all, the outside state penetrates objects very seldom and only very little. The touching state also only penetrates the objects slightly for the same reasons. It uses depenetration and sweep and place, but never places the hand at the controller directly. Because both states don't allow the hand to penetrate far into the object the selected depenetration direction points towards the entry surface even though the controller might be closer to another.
 
@@ -247,7 +249,10 @@ As the final thing after having adjusted the fingers, we again want to move the 
 
 \begin{figure}[H]
 \centering
-\small
+\footnotesize
+\begin{flushleft}
+Position, rotation and finger positions:
+\end{flushleft}
 \begin{enumerate}[noitemsep]
 \item Move the hand's rigidbody to the target controller.
 \item Orient the hand's rigidbody compared to the target controller.
@@ -314,7 +319,7 @@ Before applying the velocities described above, we adjust the fingers of the han
 			edge [bend left]		node {10} (C);
 \end{tikzpicture}
 \begin{enumerate}[noitemsep]
-\small
+\footnotesize
 \item Hand is closed.
 \item Hand is opened.
 \item Grabbable object in grab area.
@@ -418,7 +423,7 @@ We move the hand after rotation has occurred. In order for the hand not to penet
 The fingers of the Rotation Hand are moved using inverse kinematics. When we want to move the fingers, there are two situations we consider; either the hand is near objects that the fingers might interact with or it isn't. In both cases we start off by setting the fingers' targets to the positions defined by the controller's trigger value. This position is determined by the hand animation, which is blended between an open and closed animation frame. In the case that there aren't any nearby objects, nothing more is done to the fingers. When the plater presses the trigger they will therefore close the hand and when they release the trigger the hand will open. In the other case, where the hand is close to one or more objects, the fingers will be adjusted so that they don't penetrate any objects. To do this, all colliders within a radius are found using the same method described above. For each of the found colliders we check if the fingertips are inside by computing the penetration between the fingertip collider and the found collider. Before this step, we enable the fingertip colliders, which are normally disabled. After computing the penetration we disable the fingertip collider again. The distance and direction gathered from computing the penetration is then used to move the finger's IK target. This means that the desired location the finger is trying to move to is moved outside of the object.
 
 \begin{figure}[H]
-\small
+\footnotesize
 Position and rotation:
 \begin{enumerate}[noitemsep]
 \item If no objects are within a radius from the hand, move towards the position and the rotation of the controller and skip the rest.
@@ -459,7 +464,7 @@ While the rotation filtering works as expected in most cases, the fingers have s
 \label{sec:handVisualization}
 When the hand is separated from the controller as happens with our prototypes when the controller is moved inside an object, it can be hard to understand exactly where one's real hand is positioned in the virtual world. Not knowing what the actual input to the hand is can lead the players to not understand why the hand is positioned as it is in the virtual world or to believe that the game is experiencing a bug. To visualise the actual input, hoping to make it clearer for players what is happening, we've implemented a wireframe version of the hands, which is displayed at the position of the controller when the controller is separated more than a defined distance from the hand. The wireframe hand is placed such that it mimics where the virtual hand would have been placed if it hadn't been obstructed, in essence showing where the players real hand is in the virtual world as far as the tracking data allows us to know. In order to not obstruct the player's view too much by showing the wireframe hand immediately upon separation, the wireframe fades in as the distance grows. This is implemented using one of Unity's animation curves as explained above, which fades the hand in by adjusting the alpha value of the visualization from 0 towards 1 as the distance between the controller and virtual hand grows\footnote{The alpha value indicates how transparent or opaque an object or image is. 0 means that it's completely transparent and 1 indicates that it's completely opaque.}. The result is that after the hand is separated from the controller by a certain distance the wireframe hand starts fading in and becomes more opaque when the distance increases further.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Sequences/Visualization/Seq_Visualization.png}
 \caption{Sequence showing the real hand wireframe visualization. A gif can be found here: \url{https://tinyurl.com/HandVisualization} .}
@@ -500,13 +505,17 @@ In our implementation of the Job Simulator Hand, it is set up using a kinematic 
 
 \begin{figure}[H]
 \centering
-\small
+\footnotesize
+\begin{flushleft}
 Position and rotation:
+\end{flushleft}
 \begin{enumerate}[noitemsep]
 \item Move the hand's rigidbody to the target controller using $MovePosition$.
 \item Orient the hand's rigidbody compared to the target controller using $MoveRotation$.
 \end{enumerate}
-Fingers:
+\begin{flushleft}
+Finger positions:
+\end{flushleft}
 \begin{enumerate}[noitemsep]
 \item Check if there is a grabbable object in the grab area of the hand below the palm.
 \item If there is, set the new target closed value to a defined hover closed value.
@@ -519,9 +528,6 @@ Fingers:
 
 \section{Overview}
 \label{sec:experimentalAnalysisOverview}
-
-\todo[inline]{Find better section name}
-
 In this chapter we've examined the categorization of approaches, which describes what position filtering, rotation filtering and finger position filtering are, explaining on a high level how they can be implemented and how they've been used in our prototypes. We approached the Virtual Constraints Problem by using these filters to make the hands behave in a more natural way than what is seen in games like Job Simulator. We've used position filtering as the main mechanism behind stopping penetration of objects and we've used rotation and finger position filtering as a means to minimize the amount of position adjustment needed, as well as to increase the realistic feel of the hands. Furthermore, the finger filtering has also been used as a diegetic way of displaying to the player which objects are grabbable and which aren't. The grabbable system we've implemented has the goal of making it easier to setup which objects can be grabbed by the hands and which can't as well as define different behaviors for different grabbables. The grabbables come in three variants: the Parenting Grabbable, the Fixed Joint Grabbable and the Velocities Grabbable. These three approaches all have their own set of pros and cons. The Parenting Grabbable follows the hand as precisely as possible, but doesn't always work well with the physics system without extra implementations. The Fixed Joint Grabbable interacts as expected with objects around it, while moved by the hand, but has some issues related to the mass of objects which lets it drag the hand around and makes the grabbable feel springy when moving it around fast. The approach taken with the The Velocities Grabbable uses velocities instead of a joint to make it follow the hand, which alleviates the problems mentioned for the Fixed Joint Grabbable.
 
 %The Parenting Grabbable was the first implementation we made and might be the naïve solution. The grabbed object is set to be a child of the hand, meaning that when the hand's transform is changed, so do all the children's, including the grabbed object. The Parenting Grabbable comes with its own set of troubles due to having two rigidbodies, one being a child of the other, which doesn't interact well with the physics system and therefore needs to be handled. Our solution was to remove the grabbed object's rigidbody and replace it again after the object has been dropped. A more elegant solution though could be to not make the object a child of the hand, but to somehow connect it to the hand by other means. One of these solutions is to use a joint to connect the two rigidbodies; the grabbed object's and the hand's. The Fixed Joint Grabbable uses a fixed joint, which always tries to move the rigidbody to its target location by applying forces to the object. Moving this way means that the hand and the grabbed object will interact as separate bodies with the surrounding environment, but the fact that the movement happens through forces creates this bouncing effect, where the grabbed object overshoots its target and bounces back and forth. As a means to solve this problem, we experimented with setting the velocities of the Grabbed object in the same manner we do when moving the Physics Hand to its target position. The velocities needed for the object to reach its target in one frame are applied to the object and by moving it this way, we see the same kind of behavior as with the fixed joint, but without the bounciness seen when moving the controller fast and then stopping suddenly.
