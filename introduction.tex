@@ -1,6 +1,6 @@
 In our day-to-day lives, we constantly use our hands to hold, operate and otherwise manipulate objects, tools and devices with precision. We use them to gather tactile information about the world and even to communicate with each other through hand gestures and body language. They are a fundamental part of the human body and our way of interacting with the world around us.
 
-The biggest buzzword's in the Virtual Reality (VR) medium: immersion and presence, perhaps point us in the right direction. VR is meant to bring us closer than ever before to experiencing virtual environments as if we were actually in them. Interaction is a big part of experiencing the places we are in. It should hardly be a point of contention then, that having virtual hands that imitate our own real hands can have a significant impact on VR experiences.
+The biggest buzzwords in the Virtual Reality (VR) medium: immersion and presence, perhaps point us in the right direction. VR is meant to bring us closer than ever before to experiencing virtual environments as if we were actually in them. Interaction is a big part of experiencing the places we are in. It should hardly be a point of contention then, that having virtual hands that imitate our own real hands can have a significant impact on VR experiences.
 
 VR game developers and hardware manufactures alike have acknowledged this. Major consumer-oriented VR devices like the HTC Vive, the PlayStation VR  with the PlayStation Move Motion Controllers (PS VR + Move) and the Oculus Rift + Touch have controllers that track the position of your hands in space \parencite{htcvive2016, psvr2016, psmove2010, oculus2016}. In their About page, Owlchemy Labs, the creators of the critically and commercially acclaimed \parencite{UnityAwards2016, SteamSpyJobSim} Job Simulator: the 2050 archives \parencite{OwlchemyLabs2016} declare:
 
@@ -19,7 +19,7 @@ Predictably enough, this is not the end of the story. Even if we had complete tr
 
 The work here presented is focused on the second option, which is seen as a directly opposite alternative to the first. We aim to explore how virtual hands can work in this case and investigate whether the user experience can be improved with this approach.
 
-From this point on, we will refer to this problem as the virtual world constraints problem, to the first option as the unadjusted hand control model and to the second option as the adjusted hand control model.
+From this point on, we will refer to this problem as the Virtual Constraints Problem, to the approaches fitting the first option as Unadjusted Hand Control Models and to those fitting the second option as Adjusted Hand Control Models.
 
 \begin{figure}[h]
 \centering
@@ -27,7 +27,6 @@ From this point on, we will refer to this problem as the virtual world constrain
 \caption{Comparison of VR controllers and their different input and output capabilities. Note that the final version of the HTC Vive controllers looks different. Retrieved from\parencite{MetanautVR2015}.}
 \label{fig:vrControllerComparison}
 \end{figure}
-\todo[inline]{Include bigger version in landscape in the appendix or maybe directly here taking up a whole page?}
 
 \section{State of the Art}
 \label{sec:stateOfTheArt}
@@ -49,7 +48,7 @@ Figure \ref{fig:vrControllerComparison} shows the features of the Oculus Touch a
 \item the analogue triggers with digital click at the end, controlled with the index finger, 
 \item the digital grip buttons, pressed with middle, ring and/or pinky fingers,
 \item the joysticks or trackpads, with analog x/y input through capacitive touch and digital click, used with the thumbs
-\item and rumble capabilities (discrete, strength, frequency).
+\item and rumble capabilities.
 \end{itemize}
 
 In the case of the Oculus Touch, the relevant features are:
@@ -58,7 +57,7 @@ In the case of the Oculus Touch, the relevant features are:
 \item the analogue triggers with capacitive touch, controlled with the index fingers, 
 \item the analogue side triggers, pressed with middle, ring and/or pinky fingers,
 \item the joysticks, with analog x/y input, digital click capacitive touch, used with the thumbs
-\item and rumble capabilities (discrete, strength, frequency).
+\item and rumble capabilities.
 \end{itemize}
 
 Figure \ref{fig:psmoveDiagram} shows the input mechanisms of the PS Move Motion Controller, again, the most relevant features are:
@@ -80,12 +79,12 @@ Analogue buttons are useful to allow the users to control the motion of the virt
 
 The Oculus Touch is the controller that takes these input mechanisms further having a capacitive trigger for the index finger, capacitive buttons for the thumb and a normal trigger for the other three fingers. This can be used to detect a variety of gestures like index finger pointing, thumbs up (or down), finger guns... It also facilitates common interactions like pressing virtual buttons with your virtual index finger, operating a grabbed object with the same hand that is holding it (e.g. press gun trigger). Both the HTC Vive and PS VR controllers allow for a lower degree of natural finger control.
 
-Other accessories exist that allow for actual positional tracking of the fingers \parencite{ManusVR2016}. These would of course enhance the experience, but ultimately would face the same problem because they don't provide a way to impose constraints from the virtual world on the real hands of the user.
+Other accessories exist that allow for actual positional tracking of the fingers, such as the Manus VR Gloves \parencite{ManusVR2016}. These would of course enhance the experience, but ultimately would face the same problem because they don't provide a way to impose constraints from the virtual world on the real hands of the user.
 
 \subsection{VR Games}
 \label{subsec:vrGames}
 
-The most frequent approach to dealing with the virtual world constraints problem described at the beginning of this chapter is to ignore these constraints when they conflict with the user input. Job Simulator is a prime example of the unadjusted hand model and the one that we have used in our work as a baseline for comparison.
+The most frequent approach to dealing with the Virtual Constraints Problem described at the beginning of this chapter is to ignore these constraints when they conflict with the user input. Job Simulator is a prime example of the unadjusted hand model and the one that we have used in our work as a baseline for comparison.
 
 In Job Simulator the hands never separate from the position of the controller, but this still allows for reasonable physical interaction with small, light objects that can be easily moved by the hands. When the hands collide with movable objects, the object is pushed out of the way. However, when the virtual hands collide with objects that cannot be moved by them, the hands will simply go through them as if they weren't there as shown in Figure \ref{fig:jobSimStaticProblem}.
 
@@ -149,7 +148,7 @@ Figure \ref{fig:loneEchoGrip} tries to show the procedural hand posing shown in 
 \section{Research Questions}
 \label{sec:researchQuestions}
 
-This work explores ways of dealing with the virtual world constraints problem previously described: how can we deal with the conflict between wanting the virtual hands to imitate the user's real hands and at the same time respect the virtual environment?
+This work explores ways of dealing with the Virtual Constraints Problem previously described: how can we deal with the conflict between wanting the virtual hands to imitate the user's real hands and at the same time respect the virtual environment?
 
 We consider this problem to be specially prominent in two use cases:
 
@@ -159,8 +158,6 @@ We consider this problem to be specially prominent in two use cases:
 \end{enumerate}
 
 These properties should be pursued without losing the degree of control, consistency and intuitiveness that existing unadjusted hand models provide. In sum, the degree of "hand presence" (term commonly used in the VR industry \parencite{Bye2016}) achieved by this model cannot be lost in favor of these goals. The question this work addresses is whether "hand presence" can be improved by dealing with the virtual environment constraints problem.
-
-\todo{Hand presence should be defined earlier?}
 
 As secondary objectives, we are interested in finding ways of conveying a sense of the weight of virtual objects when interacting with them and improving the tactility of the virtual hands, improving the feeling of touching virtual objects, which are also aspects currently unsatisfactorily addressed.
 
